@@ -1,0 +1,4 @@
+db.sqlite
+venv/
+**/*.pyc
+**/.DS_Store
