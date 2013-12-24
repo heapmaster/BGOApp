@@ -17,7 +17,7 @@ App.Models.GameDetail = Backbone.Model.extend({
     
     Backbone.Mediator.sub('game_list_load_succeed', this.fetch_data);
     
-    this.url = 'http://fast-caverns-5319.herokuapp.com/game/' + options.game_id + '/';
+    this.url = 'http://bgo.herokuapp.com/game/' + options.game_id + '/';
   },
   fetch_data: function() {
     this.fetch({success: this.success_handler});
