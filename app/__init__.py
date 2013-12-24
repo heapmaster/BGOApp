@@ -18,6 +18,7 @@ else:
 db = SQLAlchemy(app)
 
 class Game(db.Model):
+    __tablename__ = 'game'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     icon = db.Column(db.String(300))
@@ -54,6 +55,7 @@ class Game(db.Model):
        }
 
 class Country(db.Model):
+    __tablename__ = 'country'
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     icon = db.Column(db.String(300))
@@ -90,6 +92,7 @@ class Country(db.Model):
         }
 
 class Match(db.Model):
+    __tablename__ = 'match'
     id = db.Column(db.Integer, primary_key=True)
     gameId = db.Column(db.Integer, db.ForeignKey('game.id'))
     duration = db.Column(db.Integer)
@@ -110,6 +113,7 @@ class Match(db.Model):
         }
 
 class GamePlayer(db.Model):
+    __tablename__ = 'game_player'
     id = db.Column(db.Integer, primary_key=True)
     matchId = db.Column(db.Integer, db.ForeignKey('match.id'))
     countryId = db.Column(db.Integer, db.ForeignKey('country.id'))
