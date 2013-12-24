@@ -131,7 +131,7 @@ def calc_user_score(id):
     score = 0
     matches = GamePlayers.query.filter_by(companyId=id).all()
     for match in matches:
-        points = Game.query.filter_by(id=match.game.id).first().points
+        points = Game.query.filter_by(id=match.match.id).first().points
         score = score + max(0, points*(4-match.place)/3)
 
     return score
@@ -142,7 +142,7 @@ def get_games():
 
 @app.route('/game/<id>/', methods = ['GET'])
 def get_game(id):
-    return jsonify( game = [i.serialize for i in Game.query.filter_by(id=id)] )
+    return jsonify(Game.query.filter_by(id=id).first().serialize)
 
 @app.route('/companies', methods = ['GET'])
 def get_companies():
@@ -150,7 +150,7 @@ def get_companies():
 
 @app.route('/company/<id>/', methods = ['GET'])
 def get_company(id):
-    return jsonify( company = [i.serialize for i in Company.query.filter_by(id=id)] )
+    return jsonify(Company.query.filter_by(id=id).first().serialize)
 
 @app.route('/company/<id>/score')
 def get_user_score(id):
