@@ -12,8 +12,8 @@ db.session.commit()
 
 
 
-smallworld = Game(name='Small World',icon='icon.jpg',difficulty='Medium',points='12',numPlayers='2-5',description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building')
-smallworld2 = Game(name='Small World2',icon='icon.jpg2',difficulty='Medium2',points='12',numPlayers='2-5',description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building')
+smallworld = Game(name='Small World',icon='resources/img/small_world.jpg',difficulty='Medium',points='12',numPlayers='2-5',description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building')
+smallworld2 = Game(name='Small World2',icon='resources/img/small_world.jpg',difficulty='Medium2',points='12',numPlayers='2-5',description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building')
 db.session.add(smallworld)
 db.session.add(smallworld2)
 db.session.commit()
