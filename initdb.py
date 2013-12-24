@@ -1,6 +1,8 @@
 from app import *
 import datetime
 
+if("sqlite" not in app.config['SQLALCHEMY_DATABASE_URI']):
+	db.reflect()
 db.drop_all()
 db.create_all()
 
