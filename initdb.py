@@ -4,8 +4,8 @@ import datetime
 db.drop_all()
 db.create_all()
 
-shane = Company(name='Globex',icon='globex.jpg',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Shane Fry')
-alan = Company(name='Shinra',icon='globex.jpg',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Alan You')
+shane = Country(name='Globex',icon='globex.jpg',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Shane Fry')
+alan = Country(name='Shinra',icon='globex.jpg',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Alan You')
 db.session.add(shane)
 db.session.add(alan)
 db.session.commit()
@@ -25,11 +25,11 @@ db.session.add(g1)
 db.session.add(g2)
 db.session.commit()
 
-p1 = GamePlayers(matchId=g1.id, companyId=alan.id, place=1)
-p2 = GamePlayers(matchId=g1.id, companyId=shane.id, place=2)
+p1 = GamePlayers(matchId=g1.id, countryId=alan.id, place=1)
+p2 = GamePlayers(matchId=g1.id, countryId=shane.id, place=2)
 
-p3 = GamePlayers(matchId=g2.id, companyId=shane.id, place=1)
-p4 = GamePlayers(matchId=g2.id, companyId=alan.id, place=2)
+p3 = GamePlayers(matchId=g2.id, countryId=shane.id, place=1)
+p4 = GamePlayers(matchId=g2.id, countryId=alan.id, place=2)
 
 db.session.add(p1)
 db.session.add(p2)
