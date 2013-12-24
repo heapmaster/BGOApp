@@ -4,10 +4,9 @@
     </div>
     <div class="col-md-3">
       <div class="list-group">
-        <a href="#" class="list-group-item">Agricola</a>
-        <a href="#" class="list-group-item">Dominion</a>
-        <a href="#games/2" class="list-group-item">Settlers of Catan</a>
-        <a href="#games/1" class="list-group-item active">Small World</a>
+        <% _.each(gameList, function(game) { %>
+        <a href="#games/<%= game.id %>" class="list-group-item" id="game_<%= game.id %>"><%= game.name %></a>
+        <% }); %>
       </div>
     </div>
   </div>

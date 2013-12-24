@@ -15,7 +15,7 @@ App.Models.GameDetail = Backbone.Model.extend({
   initialize: function(options){
     _.bindAll(this, 'success_handler', 'fetch_data');
     
-    Backbone.Mediator.sub('game_list_load_succeed', this.fetch_data);
+    Backbone.Mediator.subscribeOnce('game_list_load_succeed', this.fetch_data);
     
     this.url = 'http://bgo.herokuapp.com/game/' + options.game_id + '/';
   },

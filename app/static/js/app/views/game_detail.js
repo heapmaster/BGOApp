@@ -1,30 +1,28 @@
-console.log("Loading models/game.js");
+console.log("Loading views/game_detail.js");
 
-App.Models.GameDetail = Backbone.Model.extend({
-  defaults: {
-    id: '', 
-    name: '', 
-    category: '', 
-    numPlayers: '', 
-    playingTime: '', 
-    difficulty: '', 
-    points: '',
-    description: '', 
-    icon: ''
-  },
+App.Views.GameDetailView = Backbone.View.extend({
+  templateName: 'game_detail.html',
   initialize: function(options){
-    _.bindAll(this, 'success_handler', 'fetch_data');
+    _.bindAll(this, 'render', 'report');
+    this.dom_name = options.dom_name;
     
-    Backbone.Mediator.subscribeOnce('game_list_load_succeed', this.fetch_data);
+    this.model = new App.Models.GameDetail({ game_id: options.game_id });
+
+    this.model.on('game_detail_load_succeed', this.report);
+  },
+  render: function(){
+    var compiledTemplate = _.template(this.template, this.model.attributes);
+
+    $(this.dom_name).html(compiledTemplate);
+/*
+    this.$el.html(compiledTemplate);
+    console.log(this.$el.html());
+*/
     
-    this.url = 'http://bgo.herokuapp.com/game/' + options.game_id + '/';
+    return this;
   },
-  fetch_data: function() {
-    this.fetch({success: this.success_handler});
-    console.log("trigger received");
-  },
-  success_handler: function() {
-    console.log("fired next trigger");
-    this.trigger("game_detail_load_succeed");
-  },
+  report: function(){
+    console.log("last trigger received");
+    this.render();
+  }
 });

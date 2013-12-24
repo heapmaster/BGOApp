@@ -1,4 +1,3 @@
-
 console.log("Loading models/game.js");
 
 App.Models.GameList = Backbone.Model.extend({
