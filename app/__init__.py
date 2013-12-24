@@ -19,7 +19,7 @@ class Game(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(80), unique=True)
     icon = db.Column(db.String(300))
-    difficulty = db.Column(db.Integer)
+    difficulty = db.Column(db.String(40))
     points = db.Column(db.Integer)
     numPlayers = db.Column(db.String(20))
     description = db.Column(db.Text)
