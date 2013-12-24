@@ -134,7 +134,7 @@ class GamePlayers(db.Model):
             'points' : max(0, self.match.game.points*(4-self.place)/3)
         }
 
-def calc_user_score(id):
+def calc_country_score(id):
     score = 0
     matches = GamePlayers.query.filter_by(countryId=id).all()
     for match in matches:
@@ -164,12 +164,16 @@ def get_country(id):
     return jsonify(Country.query.filter_by(id=id).first().serialize)
 
 @app.route('/country/<id>/score')
-def get_user_score(id):
-    return jsonify(score = calc_user_score(id))
+def get_country_score(id):
+    return jsonify(score = calc_country_score(id))
 
 @app.route('/matches', methods = ['GET'])
 def get_matches():
     return jsonify( matches = [i.serialize for i in Match.query.all()] )
+
+@app.route('/match/<id>/')
+def get_match(id):
+    return jsonify(Match.query.filter_by(id=id).first().serialize)
 
 #@app.route('/matches', methods = ['POST'])
 #def create_match():
