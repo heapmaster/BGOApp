@@ -15,8 +15,8 @@ App.Views.CountryListView = Backbone.View.extend({
       _: _
     };
     
-    _.each(this.model.attributes.games, function(game) {
-      data.countryList.push(game);
+    _.each(this.model.attributes.countries, function(country) {
+      data.countryList.push(country);
     });
 
     var compiledTemplate = _.template(this.template, data);

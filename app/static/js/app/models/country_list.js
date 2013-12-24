@@ -6,7 +6,7 @@ App.Models.CountryList = Backbone.Model.extend({
   initialize: function(options){
     _.bindAll(this, 'success_handler');
     
-    this.url = 'http://bgo.herokuapp.com/country';
+    this.url = 'http://bgo.herokuapp.com/countries';
     this.fetch({ success: this.success_handler });
   },
   success_handler: function() {

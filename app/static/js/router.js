@@ -4,7 +4,8 @@ App.AppRouter = Backbone.Router.extend({
   routes: {
 /*         ''                          : 'showLanding', */
     'games/:game_id'             : 'showGameDetail',
-    'countries/:country_id'      : 'showCountryDetail'
+    'countries/:country_id'      : 'showCountryDetail',
+    'scoreboard'                 : 'showScoreboard'
 /*
         'search/:query'             : 'showSearch',
         'library/:library_id'       : 'showLibrary',
@@ -23,7 +24,11 @@ App.AppRouter = Backbone.Router.extend({
   },
   showCountryDetail: function(country_id) {
     var countryListView = new App.Views.CountryListView({ el: $("#main") });
-    var countryDetailView = new App.Views.CountryDetailView({ el: $("#detail"), dom_name: "#detail", country_id: country_id });
+/*     var countryDetailView = new App.Views.CountryDetailView({ el: $("#detail"), dom_name: "#detail", country_id: country_id }); */
+  },
+  showScoreboard: function() {
+    console.log("time to load scoreboard");
+    var scoreboardView = new App.Views.ScoreboardView({ el: $("#main") });
   }
 /*
     showLanding: function(query) {

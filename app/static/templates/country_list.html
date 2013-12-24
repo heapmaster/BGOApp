@@ -1,11 +1,11 @@
 <div class="container">
   <div class="row">
-    <div class="col-md-9" id="detail">
+    <div class="col-md-8" id="detail">
     </div>
-    <div class="col-md-3">
+    <div class="col-md-4">
       <div class="list-group">
-        <% _.each(gameList, function(game) { %>
-        <a href="#games/<%= game.id %>" class="list-group-item" id="game_<%= game.id %>"><%= game.name %></a>
+        <% _.each(countryList, function(country) { %>
+        <a href="#country/<%= country.id %>" class="list-group-item" id="country_<%= country.id %>"><%= country.name %></a>
         <% }); %>
       </div>
     </div>
