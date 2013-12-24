@@ -1,6 +1,7 @@
 #!flask/bin/python
 from flask import Flask, jsonify
 from flask import request
+from flask import render_template
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
 import socket
@@ -141,6 +142,10 @@ def calc_user_score(id):
         score = score + max(0, points*(4-match.place)/3)
 
     return score
+
+@app.route('/')
+def index():
+    return render_template('games.html')
 
 @app.route('/games', methods = ['GET'])
 def get_games():
