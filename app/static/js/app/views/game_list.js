@@ -1,19 +1,15 @@
-console.log("Loading views/game_list.js");
+console.log("Loading models/game.js");
 
-App.Views.GameListView = Backbone.View.extend({
-  templateName: 'game_list.html',
-  initialize: function(options){
-    _.bindAll(this, 'render');
-    
-    this.model = new App.Models.GameList();
-    
-    this.model.on('load_succeed', this.render);
+App.Models.GameList = Backbone.Model.extend({
+  defaults: {
   },
-  render: function(){    
-    this.$el.html(this.template);
+  initialize: function(options){
+    _.bindAll(this, 'success_handler');
     
-    Backbone.Mediator.pub('game_list_load_succeed');
-    
-    return this;
+    this.url = 'http://bgo.herokuapp.com/games';
+    this.fetch({success: this.success_handler});
+  },
+  success_handler: function() {
+    this.trigger('load_succeed');
   }
 });

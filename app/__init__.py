@@ -84,7 +84,8 @@ class Country(db.Model):
             'representative' : self.name,
             'description' : self.description,
             'quote' : self.quote,
-            'quoteAuthor' : self.quoteAuthor
+            'quoteAuthor' : self.quoteAuthor,
+            'points' : calc_country_score(self.id)
         }
 
 class Match(db.Model):
@@ -174,6 +175,10 @@ def get_matches():
 @app.route('/match/<id>/')
 def get_match(id):
     return jsonify(Match.query.filter_by(id=id).first().serialize)
+
+@app.route('/scores')
+def get_scores():
+    return jsonify()
 
 #@app.route('/matches', methods = ['POST'])
 #def create_match():
