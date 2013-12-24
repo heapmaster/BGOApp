@@ -2,6 +2,7 @@
 from flask import Flask, jsonify
 from flask import request
 from flask import render_template
+from flask import abort
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
 import socket
@@ -91,27 +92,24 @@ class Country(db.Model):
 class Match(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     gameId = db.Column(db.Integer, db.ForeignKey('game.id'))
-    startTime = db.Column(db.DateTime)
-    endTime = db.Column(db.DateTime)
-    players = db.relationship('GamePlayers',backref='match',lazy='dynamic')
+    duration = db.Column(db.Integer)
+    players = db.relationship('GamePlayer',backref='match',lazy='dynamic')
     game = db.relationship('Game')
 
-    def __init__(self, gameId, startTime, endTime=None):
+    def __init__(self, gameId, duration):
         self.gameId = gameId
-        self.startTime = startTime
-        self.endTime = endTime
+        self.duration = duration
 
     @property
     def serialize(self):
         return {
             'id' : self.id,
-            'startTime' : self.startTime,
-            'endTime' : self.endTime,
+            'duration' : self.duration,
             'gameId' : self.gameId,
             'countries' : [i.serialize for i in self.players]
         }
 
-class GamePlayers(db.Model):
+class GamePlayer(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     matchId = db.Column(db.Integer, db.ForeignKey('match.id'))
     countryId = db.Column(db.Integer, db.ForeignKey('country.id'))
@@ -132,15 +130,16 @@ class GamePlayers(db.Model):
             'place' : self.place,
             'representative' : self.country.representative,
             'country' : self.country.name,
-            'points' : max(0, self.match.game.points*(4-self.place)/3)
+            'points' : max(0, self.match.game.points*(4-self.place)/3) if self.place > 0 else 0
         }
 
 def calc_country_score(id):
     score = 0
-    matches = GamePlayers.query.filter_by(countryId=id).all()
+    matches = GamePlayer.query.filter_by(countryId=id).all()
     for match in matches:
-        points = Game.query.filter_by(id=match.match.id).first().points
-        score = score + max(0, points*(4-match.place)/3)
+        points = Game.query.filter_by(id=match.match.gameId).first().points
+        if(match.place>0):
+            score = score + max(0, points*(4-match.place)/3)
 
     return score
 
@@ -187,12 +186,26 @@ def get_scores():
         board.append({"id":country.id, "country":country.name, "score":score, "flag":country.icon})
     return jsonify(scores=board)
 
-#@app.route('/matches', methods = ['POST'])
-#def create_match():
-#    if not request.json:
-#        abort(400)
+@app.route('/matches', methods = ['POST'])
+def create_match():
+    if not request.json:
+        abort(400)
+    else:
+        print request.json
 
-#    m = Match(gameId=request.json['gameId'], startTime=datetime.datetime.utcnow())
-#    players = []
-#    for player in request.json['players']
-#    return jsonify( matches = [i.serialize for i in Match.query.all()] )
+    m = Match(gameId=request.json['gameId'], duration=int(request.json['duration']))
+    
+    #TODO: add transaction around this whole create
+    db.session.add(m)
+    db.session.commit()
+
+    players = []
+    for player in request.json['players']:
+        gamePlayer = GamePlayer(matchId=m.id, countryId=player['playerId'],place=player['place'])
+        db.session.add(gamePlayer)
+
+        print "Player " + str(player['playerId']) + " finished in " + str(player['place']) + " place"
+    
+    db.session.commit()
+
+    return jsonify(m.serialize),200
