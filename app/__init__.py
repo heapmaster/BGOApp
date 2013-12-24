@@ -51,7 +51,7 @@ class Game(db.Model):
            'category': self.category
        }
 
-class Company(db.Model):
+class Country(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     name = db.Column(db.String(100), unique=True)
     icon = db.Column(db.String(300))
@@ -112,30 +112,30 @@ class Match(db.Model):
 class GamePlayers(db.Model):
     id = db.Column(db.Integer, primary_key=True)
     matchId = db.Column(db.Integer, db.ForeignKey('match.id'))
-    companyId = db.Column(db.Integer, db.ForeignKey('company.id'))
+    countryId = db.Column(db.Integer, db.ForeignKey('country.id'))
     place = db.Column(db.Integer)
     
-    company = db.relationship('Company',backref='games')
+    country = db.relationship('Country',backref='games')
 
-    def __init__(self, matchId, companyId, place=0):
+    def __init__(self, matchId, countryId, place=0):
         self.matchId = matchId
-        self.companyId = companyId
+        self.countryId = countryId
         self.place = place
 
     @property
     def serialize(self):
         return {
             'matchId' : self.matchId,
-            'countryId' : self.company.id,
+            'countryId' : self.country.id,
             'place' : self.place,
-            'representative' : self.company.representative,
-            'country' : self.company.name,
+            'representative' : self.country.representative,
+            'country' : self.country.name,
             'points' : max(0, self.match.game.points*(4-self.place)/3)
         }
 
 def calc_user_score(id):
     score = 0
-    matches = GamePlayers.query.filter_by(companyId=id).all()
+    matches = GamePlayers.query.filter_by(countryId=id).all()
     for match in matches:
         points = Game.query.filter_by(id=match.match.id).first().points
         score = score + max(0, points*(4-match.place)/3)
@@ -150,15 +150,15 @@ def get_games():
 def get_game(id):
     return jsonify(Game.query.filter_by(id=id).first().serialize)
 
-@app.route('/companies', methods = ['GET'])
-def get_companies():
-    return jsonify( companies = [i.serialize for i in Company.query.all()] )
+@app.route('/countries', methods = ['GET'])
+def get_countries():
+    return jsonify( countries = [i.serialize for i in Country.query.all()] )
 
-@app.route('/company/<id>/', methods = ['GET'])
-def get_company(id):
-    return jsonify(Company.query.filter_by(id=id).first().serialize)
+@app.route('/country/<id>/', methods = ['GET'])
+def get_country(id):
+    return jsonify(Country.query.filter_by(id=id).first().serialize)
 
-@app.route('/company/<id>/score')
+@app.route('/country/<id>/score')
 def get_user_score(id):
     return jsonify(score = calc_user_score(id))
 
