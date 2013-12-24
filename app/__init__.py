@@ -178,7 +178,14 @@ def get_match(id):
 
 @app.route('/scores')
 def get_scores():
-    return jsonify()
+    #name, rank, score, flag
+    board = []
+
+    countries = Country.query.all()
+    for country in countries:
+        score = calc_country_score(country.id)
+        board.append({"id":country.id, "country":country.name, "score":score, "flag":country.icon})
+    return jsonify(scores=board)
 
 #@app.route('/matches', methods = ['POST'])
 #def create_match():
