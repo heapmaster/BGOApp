@@ -145,7 +145,7 @@ def calc_user_score(id):
 
 @app.route('/')
 def index():
-    return render_template('games.html')
+    return render_template('index.html')
 
 @app.route('/games', methods = ['GET'])
 def get_games():
