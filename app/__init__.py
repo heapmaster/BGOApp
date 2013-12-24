@@ -3,9 +3,14 @@ from flask import Flask, jsonify
 from flask import request
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
+import socket
 
 app = Flask(__name__)
-app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/nindoja/projects/bgo/db.sqlite'
+
+if(gethostname() != "retina.local"):
+    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
+else:
+    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/nindoja/projects/bgo/db.sqlite'
 
 db = SQLAlchemy(app)
 
