@@ -7,7 +7,7 @@ import socket
 
 app = Flask(__name__)
 
-if(gethostname() != "retina.local"):
+if(socket.gethostname() != "retina.local"):
     app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
 else:
     app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/nindoja/projects/bgo/db.sqlite'
