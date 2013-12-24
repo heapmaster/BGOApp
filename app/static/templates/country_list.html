@@ -1,0 +1,13 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-9" id="detail">
+    </div>
+    <div class="col-md-3">
+      <div class="list-group">
+        <% _.each(gameList, function(game) { %>
+        <a href="#games/<%= game.id %>" class="list-group-item" id="game_<%= game.id %>"><%= game.name %></a>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+</div>
