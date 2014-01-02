@@ -1,0 +1,84 @@
+<div class="container">
+  <% if(selectedGame.length == 0) { %>
+  <div class="page-header">
+    <h1>Games</h1>
+  </div>
+  <table class="table table-hover">
+    <% _.each(gameList, function(game) { %>
+    <tr class="game-selector" game_id="<%= game.attributes.id %>">
+      <td class="col-md-1 hidden-xs" style="vertical-align:middle; height:<%= imgCellHeight %>px;" id="img-cell">
+        <img src="<%= game.attributes.icon %>" class="img-rounded img-responsive">
+      </td>
+      <td class="col-md-4 hidden-xs" style="text-align:center; vertical-align:middle;">
+        <span class="h4"><%= game.attributes.name %></span>
+      </td>
+      <td class="col-md-2 hidden-xs" style="text-align:center; vertical-align:middle;">
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-time" style="margin-right:10px;"></span><%= game.attributes.playingTime %></span>
+      </td>
+      <td class="col-md-2 hidden-xs" style="text-align:center; vertical-align:middle;">
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.numPlayers %></span>
+      </td>
+      <td class="col-md-2 hidden-xs" style="text-align:center; vertical-align:middle;">
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-tasks" style="margin-right:10px;"></span><%= game.attributes.difficulty %></span>
+      </td>
+      <td class="col-md-1 hidden-xs" style="text-align:center; vertical-align:middle;">
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-certificate" style="margin-right:10px"></span><%= game.attributes.points %></span>
+      </td>
+      
+      <td class="col-md-9 hidden-sm hidden-md hidden-lg" style="vertical-align:middle;">
+        <span class="h4"><%= game.attributes.name %></span>
+      </td>
+      <td class="col-md-3 hidden-sm hidden-md hidden-lg" style="vertical-align:middle;">
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.numPlayers %></span>
+      </td>
+      
+    </tr>
+    <% }); %>
+  </table>
+  <% } else { %>
+  <div class="row">
+    <div class="col-md-8" id="detail">
+      <div class="row">
+        <div class="col-md-8">
+          <h1><%= selectedGame.attributes.name %></h1><br>
+          <table class="table">
+            <tr>
+              <td><strong>Category</strong></td><td><%= selectedGame.attributes.category %></td>
+            </tr>
+            <tr>
+              <td><strong>Players</strong></td><td><%= selectedGame.attributes.numPlayers %></td>
+            </tr>
+            <tr>
+              <td><strong>Playing Time</strong></td><td><%= selectedGame.attributes.playingTime %></td>
+            </tr>
+            <tr>
+              <td><strong>Difficulty</strong></td><td><%= selectedGame.attributes.difficulty %></td>
+            </tr>
+            <tr>
+              <td><strong>Points</strong></td><td><%= selectedGame.attributes.points %></td>
+            </tr>
+          </table>
+        </div>
+        <div class="col-md-4">
+          <img src="<%= selectedGame.attributes.icon %>" style="margin-top:20px" class="img-rounded img-responsive">
+        </div>
+      </div>
+      <div class="page-header" style="margin-top:0px">
+        <h3>Description</h3>
+      </div>
+      <p><%= selectedGame.attributes.description %></p><br><br>
+    </div>
+    <div class="col-md-4">
+      <div class="list-group">
+        <% _.each(gameList, function(game) { %>
+        <%   if (game.attributes.id == selectedGame.attributes.id) { %>
+        <a href="#games/<%= game.attributes.id %>" class="list-group-item active"><%= game.attributes.name %></a>
+        <% } else { %>
+        <a href="#games/<%= game.attributes.id %>" class="list-group-item"><%= game.attributes.name %></a>
+        <% } %>
+        <% }); %>
+      </div>
+    </div>
+  </div>
+  <% } %>
+</div>
