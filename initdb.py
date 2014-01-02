@@ -49,6 +49,7 @@ dominion = Game(name='Dominion', icon='static/img/dominion.jpg', difficulty='Med
 # smallworld3 = Game(name='Small World3',icon='static/img/small_world.jpg',difficulty='Medium2',points=12,min_players=2, max_players=9,description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building', coop=False)
 
 db.session.add(small_world)
+db.session.add(dominion)
 
 # db.session.add(smallworld2)
 # db.session.add(smallworld3)
