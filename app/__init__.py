@@ -24,20 +24,24 @@ class Game(db.Model):
     icon = db.Column(db.String(300))
     difficulty = db.Column(db.String(40))
     points = db.Column(db.Integer)
-    numPlayers = db.Column(db.String(20))
+    min_players = db.Column(db.Integer)
+    max_players = db.Column(db.Integer)
     description = db.Column(db.Text)
     playingTime = db.Column(db.String(30))
     category = db.Column(db.String(100))
+    coop = db.Column(db.Boolean)
     
-    def __init__(self, name, icon, difficulty, points, numPlayers, description, playingTime, category):
+    def __init__(self, name, icon, difficulty, points, min_players, max_players, description, playingTime, category, coop):
         self.name = name
         self.icon = icon
         self.difficulty = difficulty
         self.points = points
-        self.numPlayers = numPlayers
+        self.min_players = min_players
+        self.max_players = max_players
         self.description = description
         self.playingTime = playingTime
         self.category = category
+        self.coop = coop
 
     @property
     def serialize(self):
@@ -48,10 +52,12 @@ class Game(db.Model):
            'icon': self.icon,
            'difficulty': self.difficulty,
            'points': self.points,
-           'numPlayers': self.numPlayers,
+           'min_players': self.min_players,
+           'max_players': self.max_players,
            'description': self.description,
            'playingTime': self.playingTime,
-           'category': self.category
+           'category': self.category,
+           'coop': self.coop
        }
 
 class Country(db.Model):
