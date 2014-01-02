@@ -146,10 +146,15 @@ class GamePlayer(db.Model):
 def calc_country_score(id):
     score = 0
     matches = GamePlayer.query.filter_by(countryId=id).all()
+    opponents = set()
+
     for match in matches:
         score = score + calc_country_game_score(id,match)
+        for player in match.match.players:
+            opponents.add(player.countryId)
 
-    return score
+    #score + social bonus and adjust for player being in opponents list
+    return score + len(opponents)-1
 
 def calc_country_game_score(countryId, match):
     points = Game.query.get(match.match.gameId).points
@@ -157,12 +162,12 @@ def calc_country_game_score(countryId, match):
     if(match.place>0 and match.place < 4 and match.place < match.match.players.count()):
         samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()
         score = (max(0, points*(4-match.place)/3))/samePlace    
-        return score
+        return score + match.match.duration-1
     #cheater  
     elif (match.place == -1):
         return -5
     
-    return 0
+    return match.match.duration-1
 
 @app.route('/')
 def index():

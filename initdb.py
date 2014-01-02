@@ -24,8 +24,8 @@ db.session.add(smallworld2)
 db.session.add(smallworld3)
 db.session.commit()
 
-g1 = Match(gameId=smallworld.id,duration=50)
-g2 = Match(gameId=smallworld.id,duration=45)
+g1 = Match(gameId=smallworld.id,duration=1)
+g2 = Match(gameId=smallworld.id,duration=2)
 
 db.session.add(g1)
 db.session.add(g2)
