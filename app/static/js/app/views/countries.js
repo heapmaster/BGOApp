@@ -8,9 +8,11 @@ App.Views.CountriesView = Backbone.View.extend({
     var currentView = this;
     
     this.countryCollection = new App.Collections.CountryCollection;
+    this.standingCollection = new App.Collections.StandingCollection;
+    
     this.selectedCountryID = options.country_id;
     
-    $.when(this.countryCollection.fetch()).done(function() {
+    $.when(this.countryCollection.fetch(), this.standingCollection.fetch()).done(function() {
       $.when(currentView.render()).done(function() {
         currentView.render();
       });
@@ -23,6 +25,9 @@ App.Views.CountriesView = Backbone.View.extend({
     var data = {
       countryList: new Array(),
       selectedCountry: '',
+      ranking: '',
+      percentage: '',
+      score: '',
       imgCellHeight: $("#img-cell").width(),
       _: _
     };
@@ -33,7 +38,10 @@ App.Views.CountriesView = Backbone.View.extend({
     
     if (country_id != 0) {
       data.selectedCountry = _.find(this.countryCollection.models, function(country) { return country.attributes.id == country_id; });
-    }
+      data.ranking = this.standingCollection.get_ranking(data.selectedCountry.attributes.id);
+      data.percentage = this.standingCollection.get_percentage(data.selectedCountry.attributes.id);
+      data.score = data.selectedCountry.attributes.points;
+    }    
     
     var compiledTemplate = _.template(this.template, data);
     
