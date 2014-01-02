@@ -217,7 +217,9 @@ def create_match():
     if not request.json:
         abort(400)
     else:
+        print "-------------------------------- begin JSON ------------------------------"
         print request.json
+        print "-------------------------------- end JSON ------------------------------"
 
     m = Match(gameId=request.json['game_id'], duration=int(request.json['duration_id']))
     
