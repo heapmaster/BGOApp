@@ -15,6 +15,7 @@ kim = Country(name='Acme',icon='static/img/shinra_flag.jpg',category='Friendly N
 
 db.session.add(alan)
 db.session.add(shane)
+db.session.add(derek)
 db.session.add(scott)
 db.session.add(kim)
 db.session.commit()
