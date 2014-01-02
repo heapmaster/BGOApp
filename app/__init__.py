@@ -140,18 +140,29 @@ class GamePlayer(db.Model):
             'place' : self.place,
             'representative' : self.country.representative,
             'country' : self.country.name,
-            'points' : max(0, self.match.game.points*(4-self.place)/3) if self.place > 0 else 0
+            'points' : max(0, self.match.game.points*(4-self.place)/3)/len(GamePlayer.query.filter_by(matchId=self.matchId,place=self.place).all()) if self.place > 0 else 0
         }
 
 def calc_country_score(id):
     score = 0
     matches = GamePlayer.query.filter_by(countryId=id).all()
     for match in matches:
-        points = Game.query.filter_by(id=match.match.gameId).first().points
-        if(match.place>0):
-            score = score + max(0, points*(4-match.place)/3)
+        score = score + calc_country_game_score(id,match)
 
     return score
+
+def calc_country_game_score(countryId, match):
+    points = Game.query.get(match.match.gameId).points
+    #award points to top 3 players so long as there are at least 3 players
+    if(match.place>0 and match.place < 4 and match.place < match.match.players.count()):
+        samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()
+        score = (max(0, points*(4-match.place)/3))/samePlace    
+        return score
+    #cheater  
+    elif (match.place == -1):
+        return -5
+    
+    return 0
 
 @app.route('/')
 def index():
@@ -161,17 +172,17 @@ def index():
 def get_games():
     return jsonify( games = [i.serialize for i in Game.query.all()] )
 
-@app.route('/game/<id>/', methods = ['GET'])
+@app.route('/games/<id>/', methods = ['GET'])
 def get_game(id):
-    return jsonify(Game.query.filter_by(id=id).first().serialize)
+    return jsonify(Game.query.get(id).serialize)
 
 @app.route('/countries', methods = ['GET'])
 def get_countries():
     return jsonify( countries = [i.serialize for i in Country.query.all()] )
 
-@app.route('/country/<id>/', methods = ['GET'])
+@app.route('/countries/<id>/', methods = ['GET'])
 def get_country(id):
-    return jsonify(Country.query.filter_by(id=id).first().serialize)
+    return jsonify(Country.query.get(id).serialize)
 
 @app.route('/country/<id>/score')
 def get_country_score(id):
@@ -181,9 +192,9 @@ def get_country_score(id):
 def get_matches():
     return jsonify( matches = [i.serialize for i in Match.query.all()] )
 
-@app.route('/match/<id>/')
+@app.route('/matches/<id>/')
 def get_match(id):
-    return jsonify(Match.query.filter_by(id=id).first().serialize)
+    return jsonify(Match.query.get(id).serialize)
 
 @app.route('/scores')
 def get_scores():
@@ -202,15 +213,15 @@ def create_match():
         abort(400)
     else:
         print request.json
-
-    m = Match(gameId=request.json['gameId'], duration=int(request.json['duration']))
+    matchJSON = request.json['matches']
+    m = Match(gameId=matchJSON['gameId'], duration=int(matchJSON['duration']))
     
     #TODO: add transaction around this whole create
     db.session.add(m)
     db.session.commit()
 
     players = []
-    for player in request.json['players']:
+    for player in matchJSON['players']:
         gamePlayer = GamePlayer(matchId=m.id, countryId=player['playerId'],place=player['place'])
         db.session.add(gamePlayer)
 
