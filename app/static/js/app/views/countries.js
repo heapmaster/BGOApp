@@ -38,9 +38,22 @@ App.Views.CountriesView = Backbone.View.extend({
     
     if (country_id != 0) {
       data.selectedCountry = _.find(this.countryCollection.models, function(country) { return country.attributes.id == country_id; });
-      data.ranking = this.standingCollection.get_ranking(data.selectedCountry.attributes.id);
       data.percentage = this.standingCollection.get_percentage(data.selectedCountry.attributes.id);
       data.score = data.selectedCountry.attributes.points;
+      data.ranking = this.standingCollection.get_ranking(data.selectedCountry.attributes.id);
+      switch(data.ranking) {
+        case 1:
+          data.ranking = data.ranking + 'st place';
+          break;
+        case 2:
+          data.ranking = data.ranking + 'nd place';
+          break;
+        case 3:
+          data.ranking = data.ranking + 'rd place';
+          break;
+        default:
+          data.ranking = data.ranking + 'th place';
+      }
     }    
     
     var compiledTemplate = _.template(this.template, data);

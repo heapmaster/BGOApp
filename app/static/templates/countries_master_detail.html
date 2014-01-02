@@ -52,10 +52,10 @@
         <h3>Ranking</h3>
       </div>
       <div class="row hidden-xs">
-        <div class="col-md-1">
+        <div class="col-md-2">
           <span class="h4"><%= ranking %></span>
         </div>
-        <div class="col-md-9">
+        <div class="col-md-8">
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;">
               <span class="sr-only">80% Complete</span>
@@ -68,14 +68,6 @@
       </div>
 
       <div class="row hidden-sm hidden-md hidden-lg">
-        <div class="col-md-4">
-          <span class="h4"><%= ranking %></span>
-        </div>
-        <div class="col-md-8">
-          <span class="h4"><%= score %> points</span>
-        </div>
-      </div>
-      <div class="row hidden-sm hidden-md hidden-lg">
         <div class="col-md-12">
           <div class="progress">
             <div class="progress-bar" role="progressbar" aria-valuenow="60" aria-valuemin="0" aria-valuemax="100" style="width: <%= percentage %>%;">
@@ -84,6 +76,12 @@
           </div>
         </div>
       </div>
+      <div class="row hidden-sm hidden-md hidden-lg">
+        <div class="col-md-12">
+          <span class="h4 pull-right"><%= score %> points</span>
+          <span class="h4"><%= ranking %></span>
+        </div>
+      </div><br>
       
       <div class="page-header" style="margin-top:0px">
         <h3>Description</h3>
