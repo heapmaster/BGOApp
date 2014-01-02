@@ -214,7 +214,7 @@ def create_match():
     else:
         print request.json
 
-    m = Match(gameId=request.json['gameId'], duration=int(request.json['duration']))
+    m = Match(gameId=request.json['game_id'], duration=int(request.json['duration_id']))
     
     #TODO: add transaction around this whole create
     db.session.add(m)
@@ -222,10 +222,10 @@ def create_match():
 
     players = []
     for player in request.json['players']:
-        gamePlayer = GamePlayer(matchId=m.id, countryId=player['playerId'],place=player['place'])
+        gamePlayer = GamePlayer(matchId=m.id, countryId=player['player_id'],place=player['place'])
         db.session.add(gamePlayer)
 
-        print "Player " + str(player['playerId']) + " finished in " + str(player['place']) + " place"
+        print "Player " + str(player['player_id']) + " finished in " + str(player['place']) + " place"
     
     db.session.commit()
 
