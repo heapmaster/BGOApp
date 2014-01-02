@@ -213,15 +213,15 @@ def create_match():
         abort(400)
     else:
         print request.json
-    matchJSON = request.json['matches']
-    m = Match(gameId=matchJSON['gameId'], duration=int(matchJSON['duration']))
+
+    m = Match(gameId=request.json['gameId'], duration=int(request.json['duration']))
     
     #TODO: add transaction around this whole create
     db.session.add(m)
     db.session.commit()
 
     players = []
-    for player in matchJSON['players']:
+    for player in request.json['players']:
         gamePlayer = GamePlayer(matchId=m.id, countryId=player['playerId'],place=player['place'])
         db.session.add(gamePlayer)
 
