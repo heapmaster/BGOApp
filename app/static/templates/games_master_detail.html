@@ -16,7 +16,7 @@
         <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-time" style="margin-right:10px;"></span><%= game.attributes.playingTime %></span>
       </td>
       <td class="col-md-2 hidden-xs" style="text-align:center; vertical-align:middle;">
-        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.numPlayers %></span>
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.min_players %>-<%= game.attributes.max_players %></span>
       </td>
       <td class="col-md-2 hidden-xs" style="text-align:center; vertical-align:middle;">
         <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-tasks" style="margin-right:10px;"></span><%= game.attributes.difficulty %></span>
@@ -29,7 +29,7 @@
         <span class="h4"><%= game.attributes.name %></span>
       </td>
       <td class="col-md-3 hidden-sm hidden-md hidden-lg" style="vertical-align:middle;">
-        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.numPlayers %></span>
+        <span class="h5" style="font-weight:normal;"><span class="glyphicon glyphicon-user" style="margin-right:10px;"></span><%= game.attributes.min_players %>-<%= game.attributes.max_players %></span>
       </td>
       
     </tr>
@@ -46,7 +46,7 @@
               <td><strong>Category</strong></td><td><%= selectedGame.attributes.category %></td>
             </tr>
             <tr>
-              <td><strong>Players</strong></td><td><%= selectedGame.attributes.numPlayers %></td>
+              <td><strong>Players</strong></td><td><%= selectedGame.attributes.min_players %>-<%= selectedGame.attributes.max_players %></td>
             </tr>
             <tr>
               <td><strong>Playing Time</strong></td><td><%= selectedGame.attributes.playingTime %></td>
