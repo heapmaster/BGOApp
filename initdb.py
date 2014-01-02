@@ -50,6 +50,7 @@ settlers_of_catan = Game(name='The Settlers of Catan', icon='static/img/catan.jp
 # smallworld2 = Game(name='Small World2',icon='static/img/small_world.jpg',difficulty='Medium2',points=12,min_players=2, max_players=5,description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building', coop=True)
 # smallworld3 = Game(name='Small World3',icon='static/img/small_world.jpg',difficulty='Medium2',points=12,min_players=2, max_players=9,description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building', coop=False)
 
+db.session.add(agricola)
 db.session.add(dominion)
 db.session.add(small_world)
 db.session.add(settlers_of_catan)
