@@ -8,9 +8,11 @@ App.Views.GamesView = Backbone.View.extend({
     var currentView = this;
     
     this.gameCollection = new App.Collections.GameCollection;
+    this.matchCollection = new App.Collections.MatchCollection;
+    
     this.selectedGameID = options.game_id;
     
-    $.when(this.gameCollection.fetch()).done(function() {
+    $.when(this.gameCollection.fetch(), this.matchCollection.fetch()).done(function() {
       $.when(currentView.render()).done(function() {
         currentView.render();
       });
@@ -22,6 +24,8 @@ App.Views.GamesView = Backbone.View.extend({
 
     var data = {
       gameList: new Array(),
+      gameCollection: '',
+      game_log: '',
       selectedGame: '',
       imgCellHeight: $("#img-cell").width(),
       _: _
@@ -31,8 +35,12 @@ App.Views.GamesView = Backbone.View.extend({
       data.gameList.push(game);
     });
     
+    data.gameCollection = this.gameCollection;
+    
     if (game_id != 0) {
       data.selectedGame = _.find(this.gameCollection.models, function(game) { return game.attributes.id == game_id; });
+      data.game_log = this.matchCollection.get_matches_by_game(data.selectedGame.attributes.id);
+      console.log(data.game_log);
     }
     
     var compiledTemplate = _.template(this.template, data);

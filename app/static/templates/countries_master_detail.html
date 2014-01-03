@@ -106,6 +106,7 @@
         <% _.each(game_log, function(game) { %>
         <%   var standing = game.get_standing_by_country(selectedCountry.attributes.id); %>
         <%   var game_name = gameList.get_name_by_id(game.id); %>
+        <%   var game_img = gameList.get_img_by_id(game.id); %>
         <%   count = count + 1; %>
         <div class="panel panel-default">
           <div class="panel-heading">
@@ -132,7 +133,7 @@
             <div class="panel-body">
               <div class="row hidden-xs">
                 <div class="col-md-2">
-                  <img src="static/img/small_world.jpg" class="img-rounded img-responsive hidden-xs">
+                  <img src="<%= game_img %>" class="img-rounded img-responsive hidden-xs">
                 </div>
                 <div class="col-md-10">
                   <table class="table table-condensed" style="margin-bottom:0px">
