@@ -6,6 +6,11 @@
         <strong>Success!</strong><span> Check the scoreboard to see where you are now.</span>
       </div>
       <% } %>
+
+      <div id="empty-participants" class="alert alert-danger" style="display:none;">
+        <strong>Error!</strong><span> You must add match participants.</span>
+      </div>
+
       <form role="form">
 
         <div class="row">
@@ -80,7 +85,7 @@
             </div>
           </div>
         </div><br>
-
+        
         <div class="row">
           <div class="col-md-offset-4 col-md-4">
             <button type="button" class="btn btn-primary btn-lg btn-block" id="submit-match">Submit Match</button>

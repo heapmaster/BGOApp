@@ -33,10 +33,6 @@ App.Views.MatchSubmissionView = Backbone.View.extend({
       selectedGame: this.selectedGame,
       selectedDuration: this.selectedDuration,
       submission_result: this.submission_result
-/*
-      positions: _.range(1, this.selectedGame.attributes.max_players + 1),
-      coop: this.selectedGame.attributes.coop
-*/
     };
 
     _.each(this.gameCollection.models, function(game) {
@@ -108,14 +104,20 @@ App.Views.MatchSubmissionView = Backbone.View.extend({
     
     this.render();
   },
-  submit_match: function(event) {    
+  submit_match: function(event) {
+    if (this.model.attributes.players.length == 0) {
+      $("#empty-participants").show();
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+      return;
+    }
     this.model.attributes.game_id = $('#inputGameName').val();
     this.model.attributes.duration_id = $('#inputGameDuration').val();
     
     console.log(this.model);
     this.model.save();
     
-    window.location.reload();
+/*     window.location.reload(); */
+    window.location = "http://bgo.herokuapp.com/#match_submisison/1";
     
 /*
     this.model = new App.Models.Match();
