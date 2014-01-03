@@ -85,6 +85,23 @@ App.Views.MatchSubmissionView = Backbone.View.extend({
   },
   
   add_standing: function(event) {
+    var current_countries = [];
+    
+    _.each(this.model.attributes.players, function(player) {
+      current_countries.push(player.player_id);
+    });
+    
+    if (_.contains(current_countries, this.selectedCountry)) {
+      $("#duplicate-country").show();
+
+      $('#myModal').modal('hide');
+      $('body').removeClass('modal-open');
+      $('.modal-backdrop').remove();    
+      $("html, body").animate({ scrollTop: 0 }, "slow");
+  
+      return;
+    }
+    
     console.log('selected country: ', this.selectedCountry);
     console.log('selected position: ', this.selectedPosition);
 

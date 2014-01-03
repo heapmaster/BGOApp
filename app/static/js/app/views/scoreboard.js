@@ -27,9 +27,6 @@ App.Views.ScoreboardView = Backbone.View.extend({
     
     data.max_score = data.countries[0].attributes.score;
 
-    console.log(data.countries);
-    console.log('max score', data.max_score);
-    
     var compiledTemplate = _.template(this.template, data);
     
     this.$el.html(compiledTemplate);
