@@ -116,8 +116,9 @@ App.Views.MatchSubmissionView = Backbone.View.extend({
     console.log(this.model);
     this.model.save();
     
-/*     window.location.reload(); */
-    window.location = "http://bgo.herokuapp.com/#match_submisison/1";
+    alert("Success!");
+    
+    window.location.reload();
     
 /*
     this.model = new App.Models.Match();

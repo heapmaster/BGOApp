@@ -105,8 +105,8 @@
         <% var count = 0 %>
         <% _.each(game_log, function(game) { %>
         <%   var standing = game.get_standing_by_country(selectedCountry.attributes.id); %>
-        <%   var game_name = gameList.get_name_by_id(game.id); %>
-        <%   var game_img = gameList.get_img_by_id(game.id); %>
+        <%   var game_name = gameList.get_name_by_id(game.gameId); %>
+        <%   var game_img = gameList.get_img_by_id(game.gameId); %>
         <%   count = count + 1; %>
         <div class="panel panel-default">
           <div class="panel-heading">

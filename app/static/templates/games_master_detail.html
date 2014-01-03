@@ -78,8 +78,8 @@
       <div class="panel-group" id="accordion">
         <% var count = 0 %>
         <% _.each(game_log, function(game) { %>
-        <%   var game_name = gameCollection.get_name_by_id(game.id); %>
-        <%   var game_img = gameCollection.get_img_by_id(game.id); %>
+        <%   var game_name = gameCollection.get_name_by_id(game.gameId); %>
+        <%   var game_img = gameCollection.get_img_by_id(game.gameId); %>
         <%   count = count + 1; %>
         <div class="panel panel-default">
           <div class="panel-heading">
