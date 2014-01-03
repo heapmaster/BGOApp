@@ -154,7 +154,7 @@ def calc_country_score(id):
             opponents.add(player.countryId)
 
     #score + social bonus and adjust for player being in opponents list
-    return score + len(opponents)-1
+    return score + max(0,len(opponents)-1)
 
 def calc_country_game_score(countryId, match):
     points = Game.query.get(match.match.gameId).points
@@ -162,6 +162,13 @@ def calc_country_game_score(countryId, match):
     if(match.place>0 and match.place < 4 and match.place < match.match.players.count()):
         samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()
         score = (max(0, points*(4-match.place)/3))/samePlace    
+        
+        matches = GamePlayer.query.filter_by(countryId=countryId).all()
+        for i in matches:
+            if i.match.gameId == match.match.gameId and i.id < match.id:
+                score = score/2
+                break
+
         return score + match.match.duration-1
     #cheater  
     elif (match.place == -1):
