@@ -39,6 +39,7 @@ db.session.add(brad)
 db.session.add(josh)
 db.session.add(bryce)
 db.session.add(michael)
+db.session.add(hines)
 db.session.add(erica)
 
 # db.session.add(scott)
