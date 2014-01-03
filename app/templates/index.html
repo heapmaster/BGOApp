@@ -22,19 +22,22 @@
     <script src="static/js/libs/backbone/backbone-mediator.js"></script>
 
     <script type="text/javascript" src="static/js/libs/helper.js"></script>
-    
-    <script type="text/javascript" src="static/js/app/models/game_detail.js"></script>
-    <script type="text/javascript" src="static/js/app/models/game_list.js"></script>
-    <script type="text/javascript" src="static/js/app/views/game_list.js"></script>
-    <script type="text/javascript" src="static/js/app/views/game_detail.js"></script>
+        
+    <script type="text/javascript" src="static/js/app/models/game.js"></script>
+    <script type="text/javascript" src="static/js/app/models/country.js"></script>
+    <script type="text/javascript" src="static/js/app/models/standing.js"></script>
+    <script type="text/javascript" src="static/js/app/models/match.js"></script>
 
-    <script type="text/javascript" src="static/js/app/models/country_detail.js"></script>
-    <script type="text/javascript" src="static/js/app/models/country_list.js"></script>
-    <script type="text/javascript" src="static/js/app/views/country_list.js"></script>
-<!--     <script type="text/javascript" src="static/js/app/views/country_detail.js"></script> -->
+    <script type="text/javascript" src="static/js/app/collections/games.js"></script>
+    <script type="text/javascript" src="static/js/app/collections/countries.js"></script>
+    <script type="text/javascript" src="static/js/app/collections/standings.js"></script>
 
-    <script type="text/javascript" src="static/js/app/models/scoreboard.js"></script>
+    <script type="text/javascript" src="static/js/app/views/landing.js"></script>
+    <script type="text/javascript" src="static/js/app/views/games.js"></script>
+    <script type="text/javascript" src="static/js/app/views/countries.js"></script>
     <script type="text/javascript" src="static/js/app/views/scoreboard.js"></script>
+    <script type="text/javascript" src="static/js/app/views/rules.js"></script>
+    <script type="text/javascript" src="static/js/app/views/match_submission.js"></script>
 
     <script type="text/javascript" src="static/js/router.js"></script>
     <script type="text/javascript" src="static/js/app.js"></script>
@@ -51,18 +54,19 @@
           <span class="icon-bar"></span>
           <span class="icon-bar"></span>
         </button>
-        <a class="navbar-brand" href="index.html">Board Game Olympics</a>
+        <a class="navbar-brand" href="">Board Game Olympics</a>
       </div>
     
       <!-- Collect the nav links, forms, and other content for toggling -->
       <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
         <ul class="nav navbar-nav">
-          <li><a href="#games/1">Games</a></li>
-          <li><a href="#countries/1">Countries</a></li>
+          <li><a href="#games">Games</a></li>
+          <li><a href="#countries">Countries</a></li>
           <li><a href="#scoreboard">Scoreboard</a></li>
+          <li><a href="#rules">Rules</a></li>
         </ul>
         <ul class="nav navbar-nav navbar-right">
-          <li><a href="#">Submit Result</a></li>
+          <li><a href="#match_submission">Submit Match Result</a></li>
         </ul>
       </div><!-- /.navbar-collapse -->
     </nav>

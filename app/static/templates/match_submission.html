@@ -1,0 +1,130 @@
+<div class="container">
+  <div class="row">
+    <div class="col-md-offset-2 col-md-8">
+      <% if (submission_result == 1) { %>
+      <div class="alert alert-success">
+        <strong>Success!</strong><span> Check the scoreboard to see where you are now.</span>
+      </div>
+      <% } %>
+      <form role="form">
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header" style="margin-top:0px;">
+              <h3>Game</h3>
+            </div>
+            <div class="form-group">
+              <label for="inputGameName">Name</label>
+              <select class="form-control" id="inputGameName">
+                <% _.each(games, function(game) { %>
+                <% if (game.attributes.id == selectedGame.attributes.id) { %>
+                <option value="<%= game.attributes.id %>" selected="selected"><%= game.attributes.name %></option>
+                <% } else { %>
+                <option value="<%= game.attributes.id %>"><%= game.attributes.name %></option>
+                <% } %>
+                <% }); %>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="inputGameDuration">Duration</label>
+              <select class="form-control" id="inputGameDuration">
+                <% _.each([[1, '<1hr'], [2, '1-2 hrs'], [3, '2-3 hrs'], [4, '3-4 hrs'], [5, '4+ hrs']], function(duration) { %>
+                <% if (duration[0] == selectedDuration) { %>
+                <option value="<%= duration[0] %>" selected="selected"><%= duration[1] %></option>
+                <% } else { %>
+                <option value="<%= duration[0] %>"><%= duration[1] %></option>
+                <% } %>
+                <% }); %>
+              </select>
+            </div>
+          </div>
+        </div>
+
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header" style="margin-top:0px;">
+              <h3>Countries</h3>
+            </div>
+            <table class="table" id="standings-list">
+
+              <% _.each(standings, function(standing) { %>
+              <tr>
+                <td class="col-md-2" style="text-align:center; vertical-align:middle;">
+                  <span class="h4"><%= standing.position %></span>
+                </td>
+                <td class="col-md-1" style="vertical-align:middle;">
+                  <img src="<%= standing.country.attributes.icon %>" class="img-rounded img-responsive">
+                </td>
+                <td class="col-md-8 country-cell" style="vertical-align:middle;" country_id="<%= standing.country.attributes.id %>">
+                  <span class="h4"><%= standing.country.attributes.name %></span>
+                </td>
+                <td class="col-md-1" style="vertical-align:middle;">
+                  <button type="button" class="btn btn-sm btn-danger delete-pair"><span class="glyphicon glyphicon-remove"></span></button>
+                </td>
+              </tr>
+              <% }); %>
+
+            </table>
+            <div class="row">
+              <div class="col-md-offset-5 col-md-2">
+                <button class="btn btn-success btn-block" data-toggle="modal" data-target="#myModal">Add player</button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="row">
+          <div class="col-md-12">
+            <div class="page-header">
+            </div>
+          </div>
+        </div><br>
+
+        <div class="row">
+          <div class="col-md-offset-4 col-md-4">
+            <button type="button" class="btn btn-primary btn-lg btn-block" id="submit-match">Submit Match</button>
+          </div>
+        </div><br><br><br>
+
+      </form>
+    </div>
+  </div>
+</div>
+
+<!-- Modal -->
+<div class="modal fade" id="myModal" tabindex="-1" role="dialog" aria-labelledby="myModalLabel" aria-hidden="true">
+  <div class="modal-dialog">
+    <div class="modal-content">
+      <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h4 class="modal-title" id="myModalLabel">Add Country</h4>
+      </div>
+      <div class="modal-body">
+        <h5>Select Player</h5>
+        <div class="list-group teams">
+          <% _.each(countries, function(country) { %>
+          <a class="list-group-item" country_id="<%= country.attributes.id %>"><%= country.attributes.name %></a>
+          <% }); %>
+        </div>
+        <h5>Select Position</h5>
+        <% if (selectedGame.attributes.coop) { %>
+        <div class="list-group positions">
+          <a class="list-group-item" position_id="1">Winner</a>
+          <a class="list-group-item" position_id="0">Loser</a>
+        </div>
+        <% } else { %>
+        <div class="list-group positions">
+          <% _.each(_.range(1, selectedGame.attributes.max_players + 1), function(position) { %>
+          <a class="list-group-item" position_id="<%= position %>"><%= position %></a>
+          <% }); %>
+        </div>
+        <% } %>
+      </div>
+      <div class="modal-footer">
+        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+        <button type="button" class="btn btn-primary" id="submit-pair">Save changes</button>
+      </div>
+    </div><!-- /.modal-content -->
+  </div><!-- /.modal-dialog -->
+</div><!-- /.modal -->

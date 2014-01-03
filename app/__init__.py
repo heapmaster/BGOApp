@@ -90,7 +90,7 @@ class Country(db.Model):
             'icon' : self.icon,
             'category' : self.category,
             'dateEstablished' : self.dateEstablished,
-            'representative' : self.name,
+            'representative' : self.representative,
             'description' : self.description,
             'quote' : self.quote,
             'quoteAuthor' : self.quoteAuthor,

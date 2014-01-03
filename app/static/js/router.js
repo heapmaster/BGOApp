@@ -2,70 +2,50 @@ console.log("Loading router.js");
 
 App.AppRouter = Backbone.Router.extend({
   routes: {
-/*         ''                          : 'showLanding', */
-    'games/:game_id'             : 'showGameDetail',
-    'countries/:country_id'      : 'showCountryDetail',
-    'scoreboard'                 : 'showScoreboard'
-/*
-        'search/:query'             : 'showSearch',
-        'library/:library_id'       : 'showLibrary',
-        'pooled_set/:ps_id'         : 'showPooledSet',
-        'flowcell/:flowcell_id'     : 'showFlowcell',
-        'barcoded_library/:bclib_id': 'showBarcodedLibrary',
-        'general-status'            : 'showStatus',
-        'browse'                    : 'showBrowse',
-        'suggestions'               : 'showSuggestions',
-        'dataset'                   : 'showDataset'
-*/
+    ''                                          : 'showLanding',
+    'games'                                     : 'showGames',
+    'games/:game_id'                            : 'showGameDetail',
+    'countries'                                 : 'showCountries',
+    'countries/:country_id'                     : 'showCountryDetail',
+    'scoreboard'                                : 'showScoreboard',
+    'rules'                                     : 'showRules',
+    'match_submission'                          : 'showMatchSubmission',
+    'match_submission/:submission_result'       : 'showMatchSubmissionResult'
+  },
+  showLanding: function() {
+    var landingView = new App.Views.LandingView({ el: $("#main") });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showGames: function() {
+    var gamesView = new App.Views.GamesView({ el: $("#main"), game_id: 0 });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   showGameDetail: function(game_id) {
-    var gameListView = new App.Views.GameListView({ el: $("#main") });
-    var gameDetailView = new App.Views.GameDetailView({ el: $("#detail"), dom_name: "#detail", game_id: game_id });
+    var gamesView = new App.Views.GamesView({ el: $("#main"), game_id: game_id });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showCountries: function() {
+    var countriesView = new App.Views.CountriesView({ el: $("#main"), country_id: 0 });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   showCountryDetail: function(country_id) {
-    var countryListView = new App.Views.CountryListView({ el: $("#main") });
-/*     var countryDetailView = new App.Views.CountryDetailView({ el: $("#detail"), dom_name: "#detail", country_id: country_id }); */
+    var countriesView = new App.Views.CountriesView({ el: $("#main"), country_id: country_id });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   showScoreboard: function() {
-    console.log("time to load scoreboard");
     var scoreboardView = new App.Views.ScoreboardView({ el: $("#main") });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showRules: function() {
+    var rulesView = new App.Views.RulesView({ el: $("#main") });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showMatchSubmission: function() {
+    var matchSubmissionView = new App.Views.MatchSubmissionView({ el: $("#main"), submission_result: 0 });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showMatchSubmissionResult: function(submission_result) {
+    var matchSubmissionView = new App.Views.MatchSubmissionView({ el: $("#main"), submission_result: submission_result });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
   }
-/*
-    showLanding: function(query) {
-        var landingView = new App.Views.LandingView({ el: $("#main") });
-        window.scrollTo(0, 0);
-    },
-    showSearch: function(query) {
-        var searchView = new App.Views.SearchResultsView({ el: $("#main"), query: query });
-        window.scrollTo(0, 0);
-    },
-    showLibrary: function(library_id) {
-        var libView = new App.Views.LibraryDetailView({ el: $("#main"), library_id: library_id });
-        window.scrollTo(0, 0);
-    },
-    showPooledSet: function(ps_id) {
-        var pooledSetView = new App.Views.PooledSetDetailView({ el: $("#main"), ps_id: ps_id });
-        window.scrollTo(0, 0);
-    },
-    showFlowcell: function(flowcell_id) {
-        var flowView = new App.Views.FlowcellDetailView({ el: $("#main"), flowcell_id: flowcell_id });
-        window.scrollTo(0, 0);
-    },
-    showBarcodedLibrary: function(bclib_id) {
-        var bclibView = new App.Views.BarcodedLibraryDetailView({ el: $("#main"), bclib_id: bclib_id });
-        window.scrollTo(0, 0);
-    },
-    showStatus: function() {
-        var statusView = new App.Views.FlowcellStatusView({ el: $("#main") });
-        window.scrollTo(0, 0);
-    },
-    showSuggestions: function() {
-        var suggestionView = new App.Views.SuggestionView({ el: $("#main") });
-        window.scrollTo(0,0);
-    },
-    showDataset: function() {
-        var datasetView = new App.Views.DatasetView({ el: $("#main") });
-        window.scrollTo(0,0);
-    }
-*/
 });

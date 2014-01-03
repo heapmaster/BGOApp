@@ -2,27 +2,27 @@
   <div class="page-header">
     <h1>Current Rankings</h1>
   </div>
-  <table class="table">
+  <table class="table table-hover">
     <% var count = 0; %>
     <% var offset = 0; %>
     <% var last = 1337; %>
     
     <% _.each(countries, function(country){ %>
-    <%   if (country.score < last) { %>
+    <%   if (country.attributes.score < last) { %>
     <%     count = count + offset + 1; %>
     <%     offset = 0; %>
     <%   } else { offset = offset + 1; } %>
-    <%   var percent_score = max_score / country.score * 100.0 %>
+    <%   var percent_score = country.attributes.score / max_score * 100.0 %>
 
-    <tr>
+    <tr class="country-selector" country_id="<%= country.attributes.id %>">
       <td class="col-md-1" style="text-align:center; vertical-align:middle;">
         <span class="h4"><%= count %></span>
       </td>
       <td class="col-md-1" style="vertical-align:middle;">
-        <img src="<%= country.flag %>" class="img-rounded img-responsive" style="padding:10px">
+        <img src="<%= country.attributes.flag %>" class="img-rounded img-responsive" style="padding:10px">
       </td>
       <td class="col-md-2" style="vertical-align:middle;">
-        <span class="h4"><%= country.country %></span>
+        <span class="h4"><%= country.attributes.country %></span>
       </td>
       <td class="col-md-7" style="vertical-align:middle;">
       <div class="progress" style="margin-top:20px">
@@ -32,11 +32,11 @@
       </div>
       </td>
       <td class="col-md-1" style="text-align:center; vertical-align:middle;">
-        <span class="h4" style="padding-right:5px;"><%= country.score %></span><span class="glyphicon glyphicon-certificate"></span>
+        <span class="h4" style="padding-right:5px;"><%= country.attributes.score %></span><span class="glyphicon glyphicon-certificate"></span>
       </td>
     </tr>
 
-    <%   last = country.score; %>
+    <%   last = country.attributes.score; %>
     <% }); %>
 
   </table>
