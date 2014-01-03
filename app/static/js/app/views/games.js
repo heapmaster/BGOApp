@@ -40,7 +40,6 @@ App.Views.GamesView = Backbone.View.extend({
     if (game_id != 0) {
       data.selectedGame = _.find(this.gameCollection.models, function(game) { return game.attributes.id == game_id; });
       data.game_log = this.matchCollection.get_matches_by_game(data.selectedGame.attributes.id);
-      console.log(data.game_log);
     }
     
     var compiledTemplate = _.template(this.template, data);
