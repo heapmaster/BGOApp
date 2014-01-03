@@ -9,10 +9,11 @@ App.Views.CountriesView = Backbone.View.extend({
     
     this.countryCollection = new App.Collections.CountryCollection;
     this.standingCollection = new App.Collections.StandingCollection;
+    this.matchCollection = new App.Collections.MatchCollection;
     
     this.selectedCountryID = options.country_id;
     
-    $.when(this.countryCollection.fetch(), this.standingCollection.fetch()).done(function() {
+    $.when(this.countryCollection.fetch(), this.standingCollection.fetch(), this.matchCollection.fetch()).done(function() {
       $.when(currentView.render()).done(function() {
         currentView.render();
       });
@@ -24,6 +25,7 @@ App.Views.CountriesView = Backbone.View.extend({
 
     var data = {
       countryList: new Array(),
+      game_log: '',
       selectedCountry: '',
       ranking: '',
       percentage: '',
@@ -54,6 +56,8 @@ App.Views.CountriesView = Backbone.View.extend({
         default:
           data.ranking = data.ranking + 'th place';
       }
+      
+      data.game_log = this.matchCollection.get_matches_by_country(data.selectedCountry);
     }    
     
     var compiledTemplate = _.template(this.template, data);
