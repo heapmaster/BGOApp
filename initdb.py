@@ -23,8 +23,6 @@ hines = Country(name='Weyland-Yutani Corporation',icon='static/img/weyland_flag.
 erica = Country(name='Willy Wonka Candy Company',icon='static/img/wonka_flag.jpg',category='Candy Company',dateEstablished='Liverpool, England', description="Willy Wonka began his candy empire in 1985 with a small shop in town. The word spread across the world, Wonka decided to expand. Five years later, he built a chocolate factory, \"fifty times as big as any other.\"</p><p>His recipes were so popular, that competitors were stealing his secret recipes by sending in spies to pose as his workers. Feeling betrayed, Wonka told all his workers to go home and closed the factory in an attempt to save it.</p><p>Some time later, he re-opened the factory and chocolate was created once more. But that left a mystery: no person had been in the factory for 15 years. Yet in the last decade and a half, the candy tasted better and better. It is revealed during a tour that the workers are a race of people called the Oompa-Loompas from Loompaland.", quote="A little nonsense now and then, is relished by the wisest men.", quoteAuthor='Willy Wonka', representative='Erica Lin')
 
 template = Country(name='',icon='static/img/_flag.jpg',category='',dateEstablished='', description="", quote="", quoteAuthor='', representative='')
-# scott = Country(name='Globex',icon='static/img/globex_flag.png',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Scott N')
-# kim = Country(name='Acme',icon='static/img/shinra_flag.jpg',category='Friendly Neighborhood Conglomerate',dateEstablished='2030 BC', description='Description of Globex goes here', quote='Quote', quoteAuthor='some Author', representative='Kim N')
 
 db.session.add(derek)
 db.session.add(alan)
@@ -42,8 +40,6 @@ db.session.add(michael)
 db.session.add(hines)
 db.session.add(erica)
 
-# db.session.add(scott)
-# db.session.add(kim)
 db.session.commit()
 
 
@@ -73,8 +69,6 @@ werewolf = Game(name='Werewolf', icon='static/img/werewolf.jpg', difficulty='Eas
 zombie_dice = Game(name='Zombie Dice', icon='static/img/zombie_dice.jpg', difficulty='Easy', points=3, min_players=2, max_players=8, description="Eat brains. Don't get shotgunned.</p><p>In Zombie Dice, you are a zombie. You want braaains – more brains than any of your zombie buddies. The 13 custom dice are your victims. Push your luck to eat their brains, but stop rolling before the shotgun blasts end your turn! Whoever collects 13 brains first wins. Each game takes 10 to 20 minutes, and can be taught in a single round.</p><p>Each turn, you take 3 dice from the box and roll them. A brain symbol is worth one point at the end of the round, while footsteps allow you to reroll this particular dice. Shotgun blasts on the other hand are rather bad, cause if you collect 3 shotgun blasts during your turn, it is over for you and you get no points. After rolling 3 dice, you may decide if you want to score your current brain collection or if you want to push your luck by grabbing new dice so you have 3 again and roll once more.", playingTime='10 minutes', category='Dice, Horror, Humor', coop=False)
 
 # template = Game(name='', icon='static/img/.jpg', difficulty='Medium', points=, min_players=, max_players=, description="", playingTime=' minutes', category='', coop=False)
-# smallworld2 = Game(name='Small World2',icon='static/img/small_world.jpg',difficulty='Medium2',points=12,min_players=2, max_players=5,description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building', coop=True)
-# smallworld3 = Game(name='Small World3',icon='static/img/small_world.jpg',difficulty='Medium2',points=12,min_players=2, max_players=9,description='Description of Small World goes here', playingTime='80 minutes', category='Civilization, Fantasy, Territory Building', coop=False)
 
 db.session.add(seven_wonders)
 db.session.add(agricola)
@@ -101,8 +95,6 @@ db.session.add(tsuro)
 db.session.add(werewolf)
 db.session.add(zombie_dice)
 
-# db.session.add(smallworld2)
-# db.session.add(smallworld3)
 db.session.commit()
 
 
