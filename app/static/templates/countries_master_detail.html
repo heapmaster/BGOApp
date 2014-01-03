@@ -96,29 +96,38 @@
       <div class="page-header">
         <h3>Game Log</h3>
       </div>
+      <% if (game_log.length == 0) { %>
+      <div class="well">
+      </div>
+      <% } else { %>
       <div class="panel-group" id="accordion">
+        <% var count = 0 %>
+        <% _.each(game_log, function(game) { %>
+        <%   var standing = game.get_standing_by_country(selectedCountry.attributes.id); %>
+        <%   var game_name = gameList.get_name_by_id(game.id); %>
+        <%   count = count + 1; %>
         <div class="panel panel-default">
           <div class="panel-heading">
             <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseOne">
+              <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= count %>">
                 <div class="row">
                   <div class="col-md-8">
-                    <span class="pull-right hidden-sm hidden-md hidden-lg"><span class="glyphicon glyphicon-tower" style="padding-right:20px"></span>1<span class="glyphicon glyphicon-certificate" style="padding-left:10px; padding-right:20px"></span>12</span>
-                    <span>Betrayal at House on the Hill</span>
+                    <span class="pull-right hidden-sm hidden-md hidden-lg"><span class="glyphicon glyphicon-list" style="padding-right:20px"></span><%= standing.place %><span class="glyphicon glyphicon-certificate" style="padding-left:10px; padding-right:20px"></span><%= standing.points %></span>
+                    <span><%= game_name %></span>
                   </div>
                   <div class="col-md-2 hidden-xs">
                     <span class="glyphicon glyphicon-tower" style="padding-right:25px"></span>
-                    <span>1</span>
+                    <span><%= standing.place %></span>
                   </div>
                   <div class="col-md-2 hidden-xs">
                     <span class="glyphicon glyphicon-certificate" style="padding-right:25px"></span>
-                    <span>12</span>
+                    <span><%= standing.points %></span>
                   </div>
                 </div>
               </a>
             </h4>
           </div>
-          <div id="collapseOne" class="panel-collapse collapse">
+          <div id="collapse<%= count %>" class="panel-collapse collapse">
             <div class="panel-body">
               <div class="row hidden-xs">
                 <div class="col-md-2">
@@ -132,122 +141,14 @@
                       <th class="col-md-4">Representative</th>
                       <th class="col-md-3">Points</th>
                     </tr>
+                    <% _.each(game.attributes.countries, function(country) { %>
                     <tr>
-                      <td>1</td>
-                      <td>Buy N Large</td>
-                      <td>Alan You</td>
-                      <td>12</td>
+                      <td><%= country.place %></td>
+                      <td><%= country.country %></td>
+                      <td><%= country.representative %></td>
+                      <td><%= country.points %></td>
                     </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Aperture Science</td>
-                      <td>Derek Alfsen</td>
-                      <td>9</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Shinra Corporation</td>
-                      <td>Shane Fry</td>
-                      <td>6</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Globex Corporation</td>
-                      <td>Brad Garland</td>
-                      <td>3</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-              <table class="table table-condensed hidden-sm hidden-md hidden-lg" style="margin-bottom:0px;">
-                <tr>
-                  <th class="col-md-2">Place</th>
-                  <th class="col-md-7">Country</th>
-                  <th class="col-md-3">Representative</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Buy N Large</td>
-                  <td>Alan You</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Aperture Science</td>
-                  <td>Derek Alfsen</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>The Guild of Malicious Intent</td>
-                  <td>Josh Cohen</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Globex Corporation</td>
-                  <td>Brad Garland</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                <div class="row">
-                  <div class="col-md-8">
-                    <span class="pull-right hidden-sm hidden-md hidden-lg"><span class="glyphicon glyphicon-tower" style="padding-right:20px"></span>3<span class="glyphicon glyphicon-certificate" style="padding-left:10px; padding-right:20px"></span>6</span>
-                    <span>7 Wonders</span>
-                  </div>
-                  <div class="col-md-2 hidden-xs">
-                    <span class="glyphicon glyphicon-tower" style="padding-right:25px"></span>
-                    <span>1</span>
-                  </div>
-                  <div class="col-md-2 hidden-xs">
-                    <span class="glyphicon glyphicon-certificate" style="padding-right:25px"></span>
-                    <span>12</span>
-                  </div>
-                </div>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">
-              <div class="row hidden-xs">
-                <div class="col-md-2">
-                  <img src="static/img/small_world.jpg" class="img-rounded img-responsive hidden-xs">
-                </div>
-                <div class="col-md-10">
-                  <table class="table table-condensed" style="margin-bottom:0px">
-                    <tr>
-                      <th class="col-md-1">Place</th>
-                      <th class="col-md-4">Country</th>
-                      <th class="col-md-4">Representative</th>
-                      <th class="col-md-3">Points</th>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Buy N Large</td>
-                      <td>Alan You</td>
-                      <td>12</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Aperture Science</td>
-                      <td>Derek Alfsen</td>
-                      <td>9</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Shinra Corporation</td>
-                      <td>Shane Fry</td>
-                      <td>6</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Globex Corporation</td>
-                      <td>Brad Garland</td>
-                      <td>3</td>
-                    </tr>
+                    <% }); %>
                   </table>
                 </div>
               </div>
@@ -257,253 +158,20 @@
                   <th class="col-md-7">Country</th>
                   <th class="col-md-3">Points</th>
                 </tr>
+                <% _.each(game.attributes.countries, function(country) { %>
                 <tr>
-                  <td>1</td>
-                  <td>Buy N Large</td>
-                  <td>12</td>
+                  <td><%= country.place %></td>
+                  <td><%= country.country %></td>
+                  <td><%= country.points %></td>
                 </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Aperture Science</td>
-                  <td>8</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>The Guild of Malicious Intent</td>
-                  <td>6</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Globex Corporation</td>
-                  <td>0</td>
-                </tr>
+                <% }); %>
               </table>
             </div>
           </div>
         </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                <div class="row">
-                  <div class="col-md-8">
-                    <span class="pull-right hidden-sm hidden-md hidden-lg"><span class="glyphicon glyphicon-tower" style="padding-right:20px"></span>2<span class="glyphicon glyphicon-certificate" style="padding-left:10px; padding-right:20px"></span>9</span>
-                    <span>Dominion</span>
-                  </div>
-                  <div class="col-md-2 hidden-xs">
-                    <span class="glyphicon glyphicon-tower" style="padding-right:25px"></span>
-                    <span>1</span>
-                  </div>
-                  <div class="col-md-2 hidden-xs">
-                    <span class="glyphicon glyphicon-certificate" style="padding-right:25px"></span>
-                    <span>12</span>
-                  </div>
-                </div>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">
-              <div class="row hidden-xs">
-                <div class="col-md-2">
-                  <img src="static/img/small_world.jpg" class="img-rounded img-responsive hidden-xs">
-                </div>
-                <div class="col-md-10">
-                  <table class="table table-condensed" style="margin-bottom:0px">
-                    <tr>
-                      <th class="col-md-1">Place</th>
-                      <th class="col-md-4">Country</th>
-                      <th class="col-md-4">Representative</th>
-                      <th class="col-md-3">Points</th>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Buy N Large</td>
-                      <td>Alan You</td>
-                      <td>12</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Aperture Science</td>
-                      <td>Derek Alfsen</td>
-                      <td>9</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Shinra Corporation</td>
-                      <td>Shane Fry</td>
-                      <td>6</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Globex Corporation</td>
-                      <td>Brad Garland</td>
-                      <td>3</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-              <table class="table table-condensed hidden-sm hidden-md hidden-lg" style="margin-bottom:0px;">
-                <tr>
-                  <th class="col-md-2">Place</th>
-                  <th class="col-md-7">Country</th>
-                  <th class="col-md-3">Representative</th>
-                </tr>
-                <tr>
-                  <td>1</td>
-                  <td>Buy N Large</td>
-                  <td>Alan You</td>
-                </tr>
-                <tr>
-                  <td>2</td>
-                  <td>Aperture Science</td>
-                  <td>Derek Alfsen</td>
-                </tr>
-                <tr>
-                  <td>3</td>
-                  <td>The Guild of Malicious Intent</td>
-                  <td>Josh Cohen</td>
-                </tr>
-                <tr>
-                  <td>4</td>
-                  <td>Globex Corporation</td>
-                  <td>Brad Garland</td>
-                </tr>
-              </table>
-            </div>
-          </div>
-        </div>
-<!--
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseTwo">
-                <div class="row">
-                  <div class="col-md-8">
-                    <span>Dominion</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="glyphicon glyphicon-tower" style="padding-right:25px"></span>
-                    <span>1</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="glyphicon glyphicon-certificate" style="padding-right:25px"></span>
-                    <span>9</span>
-                  </div>
-                </div>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseTwo" class="panel-collapse collapse">
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="static/img/dominion.jpg" class="img-rounded img-responsive">
-                </div>
-                <div class="col-md-10">
-                  <table class="table table-condensed" style="margin-bottom:0px">
-                    <tr>
-                      <th class="col-md-1">Place</th>
-                      <th class="col-md-4">Country</th>
-                      <th class="col-md-4">Representative</th>
-                      <th class="col-md-3">Points</th>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Buy N Large</td>
-                      <td>Alan You</td>
-                      <td>12</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Aperture Science</td>
-                      <td>Derek Alfsen</td>
-                      <td>9</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Shinra Corporation</td>
-                      <td>Shane Fry</td>
-                      <td>6</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Globex Corporation</td>
-                      <td>Brad Garland</td>
-                      <td>3</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
-        <div class="panel panel-default">
-          <div class="panel-heading">
-            <h4 class="panel-title">
-              <a data-toggle="collapse" data-parent="#accordion" href="#collapseThree">
-                <div class="row">
-                  <div class="col-md-8">
-                    <span>Agricola</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="glyphicon glyphicon-tower" style="padding-right:25px"></span>
-                    <span>1</span>
-                  </div>
-                  <div class="col-md-2">
-                    <span class="glyphicon glyphicon-certificate" style="padding-right:25px"></span>
-                    <span>24</span>
-                  </div>
-                </div>
-              </a>
-            </h4>
-          </div>
-          <div id="collapseThree" class="panel-collapse collapse">
-            <div class="panel-body">
-              <div class="row">
-                <div class="col-md-2">
-                  <img src="static/img/agricola.jpg" class="img-rounded img-responsive">
-                </div>
-                <div class="col-md-10">
-                  <table class="table table-condensed" style="margin-bottom:0px">
-                    <tr>
-                      <th class="col-md-1">Place</th>
-                      <th class="col-md-4">Country</th>
-                      <th class="col-md-4">Representative</th>
-                      <th class="col-md-3">Points</th>
-                    </tr>
-                    <tr>
-                      <td>1</td>
-                      <td>Buy N Large</td>
-                      <td>Alan You</td>
-                      <td>12</td>
-                    </tr>
-                    <tr>
-                      <td>2</td>
-                      <td>Aperture Science</td>
-                      <td>Derek Alfsen</td>
-                      <td>9</td>
-                    </tr>
-                    <tr>
-                      <td>3</td>
-                      <td>Shinra Corporation</td>
-                      <td>Shane Fry</td>
-                      <td>6</td>
-                    </tr>
-                    <tr>
-                      <td>4</td>
-                      <td>Globex Corporation</td>
-                      <td>Brad Garland</td>
-                      <td>3</td>
-                    </tr>
-                  </table>
-                </div>
-              </div>
-            </div>
-          </div>
-        </div>
--->
-      </div><br><br>
+        <% }) %>
+      </div>
+    <% } %><br><br>
     </div>
     <div class="col-md-4">
       <div class="list-group">

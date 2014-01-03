@@ -8,12 +8,13 @@ App.Views.CountriesView = Backbone.View.extend({
     var currentView = this;
     
     this.countryCollection = new App.Collections.CountryCollection;
+    this.gameCollection = new App.Collections.GameCollection;
     this.standingCollection = new App.Collections.StandingCollection;
     this.matchCollection = new App.Collections.MatchCollection;
     
     this.selectedCountryID = options.country_id;
     
-    $.when(this.countryCollection.fetch(), this.standingCollection.fetch(), this.matchCollection.fetch()).done(function() {
+    $.when(this.countryCollection.fetch(), this.standingCollection.fetch(), this.matchCollection.fetch(), this.gameCollection.fetch()).done(function() {
       $.when(currentView.render()).done(function() {
         currentView.render();
       });
@@ -25,6 +26,7 @@ App.Views.CountriesView = Backbone.View.extend({
 
     var data = {
       countryList: new Array(),
+      gameList: new Array(),
       game_log: '',
       selectedCountry: '',
       ranking: '',
@@ -37,6 +39,8 @@ App.Views.CountriesView = Backbone.View.extend({
     _.each(this.countryCollection.models, function(country) {
       data.countryList.push(country);
     });
+
+    data.gameList = this.gameCollection;    
     
     if (country_id != 0) {
       data.selectedCountry = _.find(this.countryCollection.models, function(country) { return country.attributes.id == country_id; });
@@ -57,7 +61,7 @@ App.Views.CountriesView = Backbone.View.extend({
           data.ranking = data.ranking + 'th place';
       }
       
-      data.game_log = this.matchCollection.get_matches_by_country(data.selectedCountry);
+      data.game_log = this.matchCollection.get_matches_by_country(data.selectedCountry.attributes.id);
     }    
     
     var compiledTemplate = _.template(this.template, data);

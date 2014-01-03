@@ -10,17 +10,17 @@ App.Collections.MatchCollection = Backbone.Collection.extend({
     return response.matches;
   },
   get_matches_by_country: function(country_id) {
-    var matches = new Array();
-    var sorted_matches = _.sortBy(this.models, function(match) { return match.attributes.game_id * -1 });
+    var results = new Array();
+    var sorted_matches = _.sortBy(this.models, function(match) { return match.attributes.gameId * -1 });
     
     _.each(sorted_matches, function(match) {
       _.each(match.attributes.countries, function(country) {
-        if (country.country_id == country_id) {
-          matches.push(match);
+        if (country.countryId == country_id) {
+          results.push(match);
         }
       });
     });
     
-    return matches;
+    return results;
   }
 });
