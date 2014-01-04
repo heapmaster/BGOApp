@@ -143,7 +143,7 @@
                       <th class="col-md-4">Representative</th>
                       <th class="col-md-3">Points</th>
                     </tr>
-                    <% _.each(game.attributes.countries, function(country) { %>
+                    <% _.each(_.sortBy(game.attributes.countries, function(country) {return country.place;}), function(country) { %>
                     <tr>
                       <td><%= country.place %></td>
                       <td><%= country.country %></td>
@@ -160,7 +160,7 @@
                   <th class="col-md-7">Country</th>
                   <th class="col-md-3">Points</th>
                 </tr>
-                <% _.each(game.attributes.countries, function(country) { %>
+                <% _.each(_.sortBy(game.attributes.countries, function(country) {return country.place;}), function(country) {  %>
                 <tr>
                   <td><%= country.place %></td>
                   <td><%= country.country %></td>
