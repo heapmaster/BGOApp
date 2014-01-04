@@ -4,10 +4,16 @@ App.Collections.MatchCollection = Backbone.Collection.extend({
   model: App.Models.Match,
   url: 'http://bgo.herokuapp.com/matches',
   initialize: function(options) {
-    _.bindAll(this, 'get_matches_by_country', 'get_matches_by_game');
+    _.bindAll(this, 'get_matches', 'get_matches_by_country', 'get_matches_by_game');
   },
   parse: function(response) {
     return response.matches;
+  },
+  get_matches: function() {
+    var results = _.sortBy(this.models, function(match) { return match.attributes.id * -1 });
+    
+    return results;
+    
   },
   get_matches_by_country: function(country_id) {
     var results = new Array();

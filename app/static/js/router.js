@@ -9,6 +9,7 @@ App.AppRouter = Backbone.Router.extend({
     'countries/:country_id'                     : 'showCountryDetail',
     'scoreboard'                                : 'showScoreboard',
     'rules'                                     : 'showRules',
+    'matches'                                   : 'showMatches',
     'match_submission'                          : 'showMatchSubmission',
     'match_submission/:submission_result'       : 'showMatchSubmissionResult'
   },
@@ -38,6 +39,10 @@ App.AppRouter = Backbone.Router.extend({
   },
   showRules: function() {
     var rulesView = new App.Views.RulesView({ el: $("#main") });
+    $("html, body").animate({ scrollTop: 0 }, "slow");
+  },
+  showMatches: function() {
+    var rulesView = new App.Views.MatchesView({ el: $("#main") });
     $("html, body").animate({ scrollTop: 0 }, "slow");
   },
   showMatchSubmission: function() {

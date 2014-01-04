@@ -1,0 +1,73 @@
+<div class="container">
+  <div class="page-header">
+    <h1>Matches</h1>
+  </div>
+  <% if (matches.length == 0) { %>
+  <div class="well" style="text-align:center;">
+    <span>No games played.</span>
+  </div>
+  <% } else { %>
+  <div class="panel-group" id="accordion">
+    <% var count = 0 %>
+    <% _.each(matches, function(match) { %>
+    <%   var game_name = games.get_name_by_id(match.attributes.gameId); %>
+    <%   var game_img = games.get_img_by_id(match.attributes.gameId); %>
+    <%   count = count + 1; %>
+    <div class="panel panel-default">
+      <div class="panel-heading">
+        <h4 class="panel-title">
+          <a data-toggle="collapse" data-parent="#accordion" href="#collapse<%= count %>">
+            <div class="row">
+              <div class="col-md-12">
+                <span><%= game_name %></span>
+              </div>
+            </div>
+          </a>
+        </h4>
+      </div>
+      <div id="collapse<%= count %>" class="panel-collapse in">
+        <div class="panel-body">
+          <div class="row hidden-xs">
+            <div class="col-md-2">
+              <img src="<%= game_img %>" class="img-rounded img-responsive hidden-xs">
+            </div>
+            <div class="col-md-10">
+              <table class="table table-condensed" style="margin-bottom:0px">
+                <tr>
+                  <th class="col-md-1">Place</th>
+                  <th class="col-md-4">Country</th>
+                  <th class="col-md-4">Representative</th>
+                  <th class="col-md-3">Points</th>
+                </tr>
+                <% _.each(_.sortBy(match.attributes.countries, function(country) { return country.place; }), function(country) { %>
+                <tr>
+                  <td><%= country.place %></td>
+                  <td><%= country.country %></td>
+                  <td><%= country.representative %></td>
+                  <td><%= country.points %></td>
+                </tr>
+                <% }); %>
+              </table>
+            </div>
+          </div>
+          <table class="table table-condensed hidden-sm hidden-md hidden-lg" style="margin-bottom:0px;">
+            <tr>
+              <th class="col-md-2">Place</th>
+              <th class="col-md-7">Country</th>
+              <th class="col-md-3">Points</th>
+            </tr>
+            <% _.each(_.sortBy(match.attributes.countries, function(country) { return country.place; }), function(country) { %>
+            <tr>
+              <td><%= country.place %></td>
+              <td><%= country.country %></td>
+              <td><%= country.points %></td>
+            </tr>
+            <% }); %>
+          </table>
+        </div>
+      </div>
+    </div><br>
+    <% }) %>
+  </div>
+  <% } %>
+</div>
