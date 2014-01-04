@@ -40,6 +40,7 @@ db.session.add(bryce)
 db.session.add(michael)
 db.session.add(hines)
 db.session.add(erica)
+db.session.add(mike)
 
 db.session.commit()
 
