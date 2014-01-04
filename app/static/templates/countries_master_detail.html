@@ -144,7 +144,9 @@
                       <th class="col-md-3">Points</th>
                     </tr>
                     <% console.log('game',game); %>
-                    <% _.each(_.sortBy(game.attributes.countries, function(country) {return country.place;}), function(country) { %>
+                    <% var sorted_games = _.sortBy(game.attributes.countries, function(country) {return country.place;}); %>
+                    <% console.log('game-sorted',sorted_games); %>
+                    <% _.each(sorted_games, function(country) { %>
                     <tr>
                       <td><%= country.place %></td>
                       <td><%= country.country %></td>
