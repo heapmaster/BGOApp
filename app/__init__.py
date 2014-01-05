@@ -140,7 +140,8 @@ class GamePlayer(db.Model):
             'place' : self.place,
             'representative' : self.country.representative,
             'country' : self.country.name,
-            'points' : max(0, self.match.game.points*(4-self.place)/3)/len(GamePlayer.query.filter_by(matchId=self.matchId,place=self.place).all()) if self.place > 0 else 0
+            #'points' : max(0, self.match.game.points*(4-self.place)/3)/len(GamePlayer.query.filter_by(matchId=self.matchId,place=self.place).all()) if self.place > 0 else 0
+            'points' : max(0, self.match.game.points*(4-self.place)/3)/1 if self.place > 0 else 0
         }
 
 def calc_country_score(id):
@@ -160,7 +161,8 @@ def calc_country_game_score(countryId, match):
     points = Game.query.get(match.match.gameId).points
     #award points to top 3 players so long as there are at least 3 players
     if(match.place>0 and match.place < 4 and match.place < match.match.players.count()):
-        samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()
+        #samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()
+        samePlace = 1;
         score = (max(0, points*(4-match.place)/3))/samePlace    
         
         matches = GamePlayer.query.filter_by(countryId=countryId).all()
