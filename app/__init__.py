@@ -162,7 +162,7 @@ def calc_country_game_score(countryId, match):
     points = Game.query.get(match.match.gameId).points
     #award points to top 3 players so long as there are at least 3 players
     if(match.place>0 and match.place < 4 and match.place < match.match.players.count()):
-        if(match.coop):
+        if(Game.query.get(match.match.gameId).coop):
             samePlace = GamePlayer.query.filter_by(matchId=match.matchId,place=match.place).count()            
         else:
             samePlace = 1
