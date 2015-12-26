@@ -3,17 +3,18 @@ from flask import Flask, jsonify
 from flask import request
 from flask import render_template
 from flask import abort
+from flask import redirect, url_for
 from flask.ext.sqlalchemy import SQLAlchemy
 import datetime
 import socket
 import os
 
 app = Flask(__name__)
+app.debug = True
+app.config['SQLALCHEMY_DATABASE_URI'] = 'postgresql:///bgoapp'
 
-if(socket.gethostname() != "retina.local"):
-    app.config['SQLALCHEMY_DATABASE_URI'] = os.environ['DATABASE_URL']
-else:
-    app.config['SQLALCHEMY_DATABASE_URI'] = 'sqlite:////Users/nindoja/projects/bgo/db.sqlite'
+basedir = os.path.abspath(os.path.dirname(__file__))
+app.config['SQLALCHEMY_MIGRATE_REPO'] = os.path.join(basedir, 'db_repository')
 
 db = SQLAlchemy(app)
 
@@ -71,8 +72,9 @@ class Country(db.Model):
     quote = db.Column(db.String(200))
     quoteAuthor = db.Column(db.String(100))
     representative = db.Column(db.String(120))
+    score = db.Column(db.Integer, default=0)
 
-    def __init__(self, name, icon, category, dateEstablished, description, quote, quoteAuthor, representative):
+    def __init__(self, name, icon, category, dateEstablished, description, quote, quoteAuthor, representative, score=0):
         self.name = name
         self.icon = icon
         self.category = category
@@ -81,6 +83,7 @@ class Country(db.Model):
         self.quote = quote
         self.quoteAuthor = quoteAuthor
         self.representative = representative
+        self.score = score
 
     @property
     def serialize(self):
@@ -94,7 +97,7 @@ class Country(db.Model):
             'description' : self.description,
             'quote' : self.quote,
             'quoteAuthor' : self.quoteAuthor,
-            'points' : calc_country_score(self.id)
+            'points' : self.score
         }
 
 class Match(db.Model):
@@ -124,13 +127,15 @@ class GamePlayer(db.Model):
     matchId = db.Column(db.Integer, db.ForeignKey('match.id'))
     countryId = db.Column(db.Integer, db.ForeignKey('country.id'))
     place = db.Column(db.Integer)
-    
+    points = db.Column(db.Integer)
+ 
     country = db.relationship('Country',backref='games')
 
-    def __init__(self, matchId, countryId, place=0):
+    def __init__(self, matchId, countryId, place=0, points=0):
         self.matchId = matchId
         self.countryId = countryId
         self.place = place
+        self.points = points
 
     @property
     def serialize(self):
@@ -142,7 +147,7 @@ class GamePlayer(db.Model):
             'country' : self.country.name,
             #'points' : max(0, self.match.game.points*(4-self.place)/3)/len(GamePlayer.query.filter_by(matchId=self.matchId,place=self.place).all()) if self.place > 0 else 0
             #'points' : max(0, self.match.game.points*(4-self.place)/3)/1 if self.place > 0 else 0
-            'points' : calc_country_game_score(self.country.id, self)
+            'points' : self.points 
         }
 
 def calc_country_score(id):
@@ -151,7 +156,8 @@ def calc_country_score(id):
     opponents = set()
 
     for match in matches:
-        score = score + calc_country_game_score(id,match)
+        #match.points = calc_country_game_score(id,match)
+        score = score + match.points
         for player in match.match.players:
             opponents.add(player.countryId)
 
@@ -205,7 +211,7 @@ def get_country(id):
 
 @app.route('/country/<id>/score')
 def get_country_score(id):
-    return jsonify(score = calc_country_score(id))
+    return jsonify(score = Country.query.get(id).score)
 
 @app.route('/matches', methods = ['GET'])
 def get_matches():
@@ -215,6 +221,16 @@ def get_matches():
 def get_match(id):
     return jsonify(Match.query.get(id).serialize)
 
+@app.route('/recalculate')
+def recalculate():
+    for player in GamePlayer.query.all():
+        player.points = calc_country_game_score(player.countryId, player)
+    for country in Country.query.all():
+        country.score = calc_country_score(country.id)
+    db.session.commit()
+
+    return redirect(url_for('index'))
+
 @app.route('/scores')
 def get_scores():
     #name, rank, score, flag
@@ -222,7 +238,7 @@ def get_scores():
 
     countries = Country.query.all()
     for country in countries:
-        score = calc_country_score(country.id)
+        score = country.score
         board.append({"id":country.id, "country":country.name, "score":score, "flag":country.icon})
     return jsonify(scores=board)
 
@@ -245,9 +261,18 @@ def create_match():
     for player in request.json['players']:
         gamePlayer = GamePlayer(matchId=m.id, countryId=player['player_id'],place=player['place'])
         db.session.add(gamePlayer)
-
+	players.append(gamePlayer)
         print "Player " + str(player['player_id']) + " finished in " + str(player['place']) + " place"
     
     db.session.commit()
 
+    print "test2"
+    for player in players:
+        country = Country.query.get(player.countryId)
+        player.points = calc_country_game_score(player.countryId, player)
+        db.session.commit()
+        print "Adding " + str(player.points) + " points to Country: " + str(country.id)
+        country.score = calc_country_score(country.id)
+        db.session.commit()
+    
     return jsonify(m.serialize),200

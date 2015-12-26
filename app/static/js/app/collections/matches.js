@@ -2,7 +2,7 @@ console.log("Loading collections/matches.js");
 
 App.Collections.MatchCollection = Backbone.Collection.extend({
   model: App.Models.Match,
-  url: 'http://bgo.herokuapp.com/matches',
+  url: 'http://www.bgolympics.com/matches',
   initialize: function(options) {
     _.bindAll(this, 'get_matches', 'get_matches_by_country', 'get_matches_by_game');
   },

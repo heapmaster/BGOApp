@@ -2,7 +2,7 @@ console.log("Loading collections/games.js");
 
 App.Collections.GameCollection = Backbone.Collection.extend({
   model: App.Models.Game,
-  url: 'http://bgo.herokuapp.com/games',
+  url: 'http://www.bgolympics.com/games',
   initialize: function(options) {
     _.bindAll(this, 'get_name_by_id', 'get_img_by_id');
   },

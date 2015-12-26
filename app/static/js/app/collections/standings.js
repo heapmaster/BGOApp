@@ -2,7 +2,7 @@ console.log("Loading collections/standings.js");
 
 App.Collections.StandingCollection = Backbone.Collection.extend({
   model: App.Models.Standing,
-  url: 'http://bgo.herokuapp.com/scores',
+  url: 'http://www.bgolympics.com/scores',
   initialize: function(options) {
     _.bindAll(this, 'get_ranking', 'get_percentage');
   },

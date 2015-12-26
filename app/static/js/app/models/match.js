@@ -1,7 +1,7 @@
 console.log("Loading models/match.js");
 
 App.Models.Match = Backbone.Model.extend({
-  url: 'http://bgo.herokuapp.com/matches',
+  url: 'http://www.bgolympics.com/matches',
   defaults: {
     players: []
   },
