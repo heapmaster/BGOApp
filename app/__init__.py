@@ -205,21 +205,21 @@ def get_game(id):
 def get_countries():
     return jsonify( countries = [i.serialize for i in Country.query.all()] )
 
-@app.route('/countries/add', methods = ['POST'])
-def add_country_post():
+@app.route('/countries/add')
+def add_country():
+    if request.method == 'POST':
+        country = Country(name=request.form['country_name'],icon='static/img/cyberdyne_systems_flag',category='',dateEstablished='', description="", quote="", quoteAuthor='', representative=request.form['country_name'])
+        print "Adding country: " + request.form['country_name']
+        #TODO: add transaction around this whole create
+        db.session.add(country)
+        db.session.commit()
 
-    country = Country(name=request.form['country_name'],icon='static/img/cyberdyne_systems_flag',category='',dateEstablished='', description="", quote="", quoteAuthor='', representative=request.form['country_name'])
-    
-    #TODO: add transaction around this whole create
-    db.session.add(country)
-    db.session.commit()
-
-    return redirect(url_for('add_country'))
+    return render_template('add_country.html')
 
 @app.route('/countries/add', methods = ['GET'])
 def add_country():
     return render_template('add_country.html')
-    
+
 @app.route('/countries/<id>/', methods = ['GET'])
 def get_country(id):
     return jsonify(Country.query.get(id).serialize)
