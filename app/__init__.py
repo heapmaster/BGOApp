@@ -198,7 +198,7 @@ def get_games():
     return jsonify( games = [i.serialize for i in Game.query.all()] )
 
 @app.route('/games/add/', methods=['GET', 'POST'])
-def add_country():
+def add_game():
     if request.method == 'POST':
         game = Game(name=request.form['game_name'], icon='', difficulty='', points=request.form['points'], min_players=request.form['min_players'], max_players=request.form['max_players'], description='', playingTime='', category='', coop=request.form['coop'])
         print "Adding game: " + request.form['game_name']
