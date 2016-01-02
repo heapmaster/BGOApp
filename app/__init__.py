@@ -206,22 +206,20 @@ def get_countries():
     return jsonify( countries = [i.serialize for i in Country.query.all()] )
 
 @app.route('/countries/add', methods = ['POST'])
-def get_countries():
-    if not request.json:
-        abort(400)
-    else:
-        print "-------------------------------- begin JSON ------------------------------"
-        print request.json
-        print "-------------------------------- end JSON ------------------------------"
+def add_country_post():
 
-    country = Country(name=request.json['country_name'],icon='static/img/cyberdyne_systems_flag',category='',dateEstablished='', description="", quote="", quoteAuthor='', representative=request.json['country_name'])
+    country = Country(name=request.form['country_name'],icon='static/img/cyberdyne_systems_flag',category='',dateEstablished='', description="", quote="", quoteAuthor='', representative=request.form['country_name'])
     
     #TODO: add transaction around this whole create
     db.session.add(country)
     db.session.commit()
 
-    return jsonify(country.serialize),200
+    return redirect(url_for('add_country'))
 
+@app.route('/countries/add', methods = ['GET'])
+def add_country():
+    return render_template('add_country.html')
+    
 @app.route('/countries/<id>/', methods = ['GET'])
 def get_country(id):
     return jsonify(Country.query.get(id).serialize)
