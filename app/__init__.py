@@ -197,6 +197,18 @@ def index():
 def get_games():
     return jsonify( games = [i.serialize for i in Game.query.all()] )
 
+@app.route('/games/add/', methods=['GET', 'POST'])
+def add_country():
+    if request.method == 'POST':
+        game = Game(name=request.form['game_name'], icon='', difficulty='', points=request.form['points'], min_players=request.form['min_players'], max_players=request.form['max_players'], description='', playingTime='', category='', coop=request.form['coop'])
+        print "Adding game: " + request.form['game_name']
+        #TODO: add transaction around this whole create
+        db.session.add(game)
+        db.session.commit()
+
+    return render_template('add_game.html')
+
+
 @app.route('/games/<id>/', methods = ['GET'])
 def get_game(id):
     return jsonify(Game.query.get(id).serialize)
@@ -217,7 +229,6 @@ def add_country():
         db.session.commit()
 
     return render_template('add_country.html')
-    #return "Hello",200
 
 @app.route('/countries/<id>/', methods = ['GET'])
 def get_country(id):

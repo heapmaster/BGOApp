@@ -1,0 +1,83 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <title>Board Game Olympics</title>
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <!-- Bootstrap -->
+    <link href="/static/css/bootstrap.min.css" rel="stylesheet">
+
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+      <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+      <script src="https://oss.maxcdn.com/libs/respond.js/1.3.0/respond.min.js"></script>
+    <![endif]-->
+    
+    <!-- jQuery (necessary for Bootstrap's JavaScript plugins) -->
+    <script src="/static/js/libs/jquery/jquery.min.js"></script>
+    <!-- Include all compiled plugins (below), or include individual files as needed -->
+    <script src="/static/js/libs/bootstrap/bootstrap.min.js"></script>
+  </head>
+  
+  
+  <body>
+    <nav class="navbar navbar-default" role="navigation">
+      <!-- Brand and toggle get grouped for better mobile display -->
+      <div class="navbar-header">
+        <button type="button" class="navbar-toggle" data-toggle="collapse" data-target="#bs-example-navbar-collapse-1">
+          <span class="sr-only">Toggle navigation</span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+          <span class="icon-bar"></span>
+        </button>
+        <a class="navbar-brand" href="/">Board Game Olympics</a>
+      </div>
+    
+      <!-- Collect the nav links, forms, and other content for toggling -->
+      <div class="collapse navbar-collapse" id="bs-example-navbar-collapse-1">
+        <ul class="nav navbar-nav">
+          <li><a href="/#games">Games</a></li>
+          <li><a href="/#countries">Countries</a></li>
+          <li><a href="/#scoreboard">Scoreboard</a></li>
+          <li><a href="/#rules">Rules</a></li>
+          <li><a href="/#matches">Matches</a></li>
+        </ul>
+        <ul class="nav navbar-nav navbar-right">
+          <li><a href="/#match_submission">Submit Match Result</a></li>
+        </ul>
+      </div><!-- /.navbar-collapse -->
+    </nav>
+    
+    <div id="main">
+      <div class="container">
+        <form role="form" action="" method="POST" enctype="multipart/form-data" class="form-horizontal">
+            <div class="form-group">
+                <label for="comments" class="col-sm-2 control-label">Game Name<br></label>
+                <div class="col-sm-5">
+                    <input class="form-control" id="game_name" name="game_name"></input>
+                </div>
+                <label for="comments" class="col-sm-2 control-label">Points<br></label>
+                <div class="col-sm-5">
+                    <input class="form-control" id="points" name="points"></input>
+                </div>
+                <label for="comments" class="col-sm-2 control-label">Min Players<br></label>
+                <div class="col-sm-5">
+                    <input class="form-control" id="min_players" name="min_players"></input>
+                </div>
+                <label for="comments" class="col-sm-2 control-label">Max Players<br></label>
+                <div class="col-sm-5">
+                    <input class="form-control" id="max_players" name="max_players"></input>
+                </div>
+                <label for="comments" class="col-sm-2 control-label">Coop<br></label>
+                <div class="col-sm-5">
+                    <checkbox class="form-control" id="coop" name="coop"></checkbox>
+                </div>
+            </div>
+            <input class="btn btn-primary" type="submit" value="Add Country">
+        </form>
+      </div>
+    </div>
+    
+    
+  </body>
+</html>
